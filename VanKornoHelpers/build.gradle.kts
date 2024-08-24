@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("maven-publish")
 }
 
 android {
@@ -39,4 +40,20 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+val versionTag = "0.0.1"
+val buildDirectory = layout.buildDirectory.get()
+
+publishing {    /* to ensure that the library is published correctly */
+    publications {
+        create<MavenPublication>("release") {
+            afterEvaluate {
+                from(components.findByName("release"))
+            }
+            groupId = "com.vankorno"
+            artifactId = "vankornohelpers"
+            version = versionTag
+        }
+    }
 }
