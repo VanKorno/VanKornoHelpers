@@ -3,7 +3,7 @@ package com.vankorno.vankornohelpers
 import android.content.Context
 import android.media.MediaPlayer
 
-class AudioHelpr {
+class MediaHelpr {
     
     private var player: MediaPlayer? = null
     
