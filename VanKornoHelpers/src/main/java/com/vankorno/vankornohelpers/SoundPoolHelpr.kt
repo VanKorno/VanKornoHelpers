@@ -4,7 +4,7 @@ import android.content.Context
 import android.media.SoundPool
 import android.util.Log
 
-class SoundPoolHelpr(                                              private val context: Context,
+class SoundPoolHelpr(                                                          context: Context,
                                                                                 sounds: Array<Int>
 ) {
     private val soundPool: SoundPool = SoundPool.Builder()
@@ -21,7 +21,8 @@ class SoundPoolHelpr(                                              private val c
     }
     
     
-    fun playSound(                                                                 sound: Int
+    fun playSound(                                                                 sound: Int,
+                                                                                 context: Context
     ) {
         val soundId = soundMap[sound]
         
