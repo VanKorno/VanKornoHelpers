@@ -8,6 +8,9 @@ import android.os.Looper
 import android.widget.Toast
 
 class MiscHelpr {
+    companion object {
+        const val iOFF = -1
+    }
     
     fun getTime24(h: Int, m: Int): String = ""+h+":"+addZero(m)
     
