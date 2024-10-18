@@ -25,11 +25,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 
@@ -42,8 +42,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-val versionTag = "1.1.2"
-val buildDirectory = layout.buildDirectory.get()
+val versionTag = "1.1.4"
+//val buildDirectory = layout.buildDirectory.get()
 
 publishing {    /* to ensure that the library is published correctly */
     publications {
