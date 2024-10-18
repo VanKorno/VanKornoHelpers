@@ -4,8 +4,8 @@ import android.content.Context
 import android.media.SoundPool
 import android.util.Log
 
-class SoundPoolHelpr(                                                          context: Context,
-                                                                                sounds: Array<Int>
+class SoundPoolHelpr(                                        context: Context,
+                                                              sounds: Array<Int> = emptyArray<Int>()
 ) {
     private val soundPool: SoundPool = SoundPool.Builder()
         .setMaxStreams(10)
