@@ -42,7 +42,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-val versionTag = "1.2.0"
+val versionTag = "1.2.1"
 //val buildDirectory = layout.buildDirectory.get()
 
 publishing {    /* to ensure that the library is published correctly */
