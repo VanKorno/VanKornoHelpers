@@ -1,6 +1,6 @@
 package com.vankorno.vankornohelpers.sql;
 
-public class ValDB {
+public class LibConstantsDB {
     public static final String
 InMemoryDB=":memory:",
 select="SELECT ", from=" FROM ", selectAllFrom="SELECT * FROM ",

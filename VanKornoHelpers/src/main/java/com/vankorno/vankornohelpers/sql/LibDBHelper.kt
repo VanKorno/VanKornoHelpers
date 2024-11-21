@@ -4,17 +4,17 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import com.vankorno.vankornohelpers.sql.entt.DbTableAndEntt
+import com.vankorno.vankornohelpers.sql.entt.LibDbTableAndEntt
 
-open class HelperDB(                  context: Context,
+open class LibDBHelper(                  context: Context,
                                        dbName: String,
                                     dbVersion: Int,
-                         private val entities: Array<DbTableAndEntt> = emptyArray<DbTableAndEntt>(),
+                         private val entities: Array<LibDbTableAndEntt> = emptyArray<LibDbTableAndEntt>(),
                             val onCreateStart: (SQLiteDatabase)->Unit = {},
                            val onCreateFinish: (SQLiteDatabase)->Unit = {},
                                 val onUpgrade: (SQLiteDatabase)->Unit = {}
 ) : SQLiteOpenHelper(context, dbName, null, dbVersion) {
-    val tag = "HelperDB"
+    val tag = "LibDBHelper"
     val dbLock = Any()
     
     
@@ -26,9 +26,9 @@ open class HelperDB(                  context: Context,
         synchronized(dbLock) {
             onCreateStart(db)
             
-            val miscDB = MiscDB(db)
+            val libMiscDB = LibMiscDB(db)
             entities.forEach {
-                db.execSQL(miscDB.buildQuery(it.whichTable, it.entity))
+                db.execSQL(libMiscDB.buildQuery(it.whichTable, it.entity))
             }
             onCreateFinish(db)
         }
@@ -112,7 +112,7 @@ open class HelperDB(                  context: Context,
                                                                              whereClause: String,
                                                                                 whereArg: String
     ): Int = readDB("getInt()", 0) { 
-        GetSet(it).getInt(whichTable, column, whereClause, whereArg)
+        LibGetSetDB(it).getInt(whichTable, column, whereClause, whereArg)
     }
     
     
@@ -121,7 +121,7 @@ open class HelperDB(                  context: Context,
                                                                              whereClause: String,
                                                                                 whereArg: String
     ): String = readDB("getString()", "") { 
-        GetSet(it).getString(whichTable, column, whereClause, whereArg)
+        LibGetSetDB(it).getString(whichTable, column, whereClause, whereArg)
     }
     
     fun getBool(                                                              whichTable: String,
@@ -129,7 +129,7 @@ open class HelperDB(                  context: Context,
                                                                              whereClause: String,
                                                                                 whereArg: String
     ): Boolean = readDB("getBool()", false) { 
-        GetSet(it).getBool(whichTable, column, whereClause, whereArg)
+        LibGetSetDB(it).getBool(whichTable, column, whereClause, whereArg)
     }
     
     fun getLong(                                                              whichTable: String,
@@ -137,7 +137,7 @@ open class HelperDB(                  context: Context,
                                                                              whereClause: String,
                                                                                 whereArg: String
     ): Long = readDB("getLong()", 0L) { 
-        GetSet(it).getLong(whichTable, column, whereClause, whereArg)
+        LibGetSetDB(it).getLong(whichTable, column, whereClause, whereArg)
     }
     
     // ============================== SETTERS ===========================================
@@ -149,7 +149,7 @@ open class HelperDB(                  context: Context,
                                                                              whereArg: String
     ) {
         writeDB("set()") {
-            GetSet(it).set(value, whichTable, column, whereClause, whereArg)
+            LibGetSetDB(it).set(value, whichTable, column, whereClause, whereArg)
         }
     }
     fun set(                                                                     value: Int,
@@ -159,7 +159,7 @@ open class HelperDB(                  context: Context,
                                                                               whereArg: String
     ) {
         writeDB("set()") {
-            GetSet(it).set(value, whichTable, column, whereClause, whereArg)
+            LibGetSetDB(it).set(value, whichTable, column, whereClause, whereArg)
         }
     }
     fun set(                                                                    value: Boolean,
@@ -169,7 +169,7 @@ open class HelperDB(                  context: Context,
                                                                              whereArg: String
     ) {
         writeDB("set()") {
-            GetSet(it).set(value, whichTable, column, whereClause, whereArg)
+            LibGetSetDB(it).set(value, whichTable, column, whereClause, whereArg)
         }
     }
     fun set(                                                                    value: Long,
@@ -179,7 +179,7 @@ open class HelperDB(                  context: Context,
                                                                              whereArg: String
     ) {
         writeDB("set()") {
-            GetSet(it).set(value, whichTable, column, whereClause, whereArg)
+            LibGetSetDB(it).set(value, whichTable, column, whereClause, whereArg)
         }
     }
     
@@ -189,16 +189,16 @@ open class HelperDB(                  context: Context,
     
     fun checkIfEmpty(                                                         whichTable: String
     ): Boolean = readDB("checkIfEmpty()", false) { 
-        GetSet(it).isEmpty(whichTable)
+        LibGetSetDB(it).isEmpty(whichTable)
     }
     
     fun getLastID(                                                            whichTable: String
-    ): Int = readDB("getLastID()", 0) { GetSet(it).getLastID(whichTable) }
+    ): Int = readDB("getLastID()", 0) { LibGetSetDB(it).getLastID(whichTable) }
     
     
     
     fun deleteFirstRow(whichTable: String) = writeDB("deleteFirstRow()") {
-        MiscDB(it).deleteFirstRow(whichTable)
+        LibMiscDB(it).deleteFirstRow(whichTable)
     }
     
     

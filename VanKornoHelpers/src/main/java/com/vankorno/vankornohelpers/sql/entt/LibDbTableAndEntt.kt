@@ -1,6 +1,6 @@
 package com.vankorno.vankornohelpers.sql.entt
 
-data class DbTableAndEntt(
+data class LibDbTableAndEntt(
                              val whichTable: String,
                                  val entity: ArrayList<Array<String>>
 )

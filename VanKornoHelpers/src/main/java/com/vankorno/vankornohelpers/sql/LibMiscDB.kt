@@ -1,9 +1,9 @@
 package com.vankorno.vankornohelpers.sql
 
 import android.database.sqlite.SQLiteDatabase
-import com.vankorno.vankornohelpers.sql.ValDB.*
+import com.vankorno.vankornohelpers.sql.LibConstantsDB.*
 
-class MiscDB(val db: SQLiteDatabase) {
+class LibMiscDB(val db: SQLiteDatabase) {
     
     fun deleteFirstRow(                                                      whichTable: String
     ) {

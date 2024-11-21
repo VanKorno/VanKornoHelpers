@@ -4,7 +4,7 @@ import android.content.Context
 import android.media.SoundPool
 import android.util.Log
 
-class SoundPoolHelpr(                                        context: Context,
+class LibSoundPool(                                        context: Context,
                                                               sounds: Array<Int> = emptyArray<Int>()
 ) {
     private val soundPool: SoundPool = SoundPool.Builder()

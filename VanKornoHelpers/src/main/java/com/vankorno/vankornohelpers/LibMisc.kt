@@ -5,7 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 
-class MiscHelpr {
+class LibMisc {
     
     fun getTime24(h: Int, m: Int): String = ""+h+":"+addZero(m)
     

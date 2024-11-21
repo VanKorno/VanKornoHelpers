@@ -5,7 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 
 
-class ClipBoardHelpr {
+class LibClipBoard {
     
     fun getTxt(                                                                  cont: Context
     ): String {

@@ -3,7 +3,7 @@ package com.vankorno.vankornohelpers
 import android.content.Context
 import android.media.MediaPlayer
 
-class MediaHelpr {
+class LibMedia {
     
     private var player: MediaPlayer? = null
     
