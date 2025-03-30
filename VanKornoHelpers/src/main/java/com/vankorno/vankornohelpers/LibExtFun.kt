@@ -3,7 +3,7 @@ package com.vankorno.vankornohelpers
 import java.security.SecureRandom
 import java.util.Locale
 
-fun IntRange.aaakRandom(): Int {
+fun IntRange.libRandom(): Int {
     val min = this.first
     val max = this.last - min
     return min + SecureRandom().nextInt(max + 1)
@@ -64,5 +64,5 @@ fun String.toNoNullLong(                                                       d
     }
 
 
-fun Int.toNoZeroStr() = if (this == 0)  ""  else  this.toString()
+inline fun Int.toNoZeroStr() = if (this == 0)  ""  else  this.toString()
 

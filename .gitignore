@@ -16,3 +16,4 @@ local.properties
 /.idea/studiobot.xml
 /.idea/runConfigurations.xml
 /.kotlin/errors
+/.idea/AndroidProjectSystem.xml

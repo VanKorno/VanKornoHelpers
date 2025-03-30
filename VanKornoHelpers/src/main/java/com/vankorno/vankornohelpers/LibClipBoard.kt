@@ -23,8 +23,7 @@ class LibClipBoard {
     }
     
     
-    fun clearBuffer(
-                                                                                 cont: Context
+    fun clearBuffer(                                                             cont: Context
     ) {
         val clipboardManager = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val emptyClip = ClipData.newPlainText("", "")

@@ -4,26 +4,29 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.vankorno.vankornohelpers.sql.LibConstantsDB.InMemoryDB
 import com.vankorno.vankornohelpers.sql.entt.LibDbTableAndEntt
 
-open class LibDBHelper(                  context: Context,
-                                       dbName: String,
+open class LibDBHelper(               context: Context,
+                           private val dbName: String,
                                     dbVersion: Int,
                          private val entities: Array<LibDbTableAndEntt> = emptyArray<LibDbTableAndEntt>(),
                             val onCreateStart: (SQLiteDatabase)->Unit = {},
                            val onCreateFinish: (SQLiteDatabase)->Unit = {},
                                 val onUpgrade: (SQLiteDatabase)->Unit = {}
 ) : SQLiteOpenHelper(context, dbName, null, dbVersion) {
-    val tag = "LibDBHelper"
     val dbLock = Any()
     
     
     override fun onCreate(                                                      db: SQLiteDatabase
     ) {
         // region LOG
-        Log.d(tag, "onCreate runs")
+            Log.d("LibDBHelper", "onCreate runs")
         // endregion
         synchronized(dbLock) {
+            if (dbName == InMemoryDB)
+                db.execSQL("PRAGMA journal_mode = OFF")
+            
             onCreateStart(db)
             
             val libMiscDB = LibMiscDB(db)
@@ -41,7 +44,7 @@ open class LibDBHelper(                  context: Context,
     ) {
         if (oldVersion >= newVersion)  return  //\/\/\/\/\/\
         // region LOG
-        Log.d(tag, "onUpgrade runs")
+            Log.d("LibDBHelper", "onUpgrade runs")
         // endregion
         synchronized(dbLock) {
             onUpgrade(db)
@@ -56,7 +59,7 @@ open class LibDBHelper(                  context: Context,
     
     // -------------------------------------------------------------------------------------------
     
-    fun writeDB(                                                     logTxt: String,
+    inline fun writeDB(                                              logTxt: String,
                                                                         run: (SQLiteDatabase)->Unit
     ) {
         synchronized(dbLock) {
@@ -64,14 +67,13 @@ open class LibDBHelper(                  context: Context,
                 writableDatabase.use { run(it) }
             } catch (e: Exception) {
                 // region LOG
-                Log.e(tag, "Error: $logTxt  $e")
+                    Log.e("LibDBHelper", "Error: $logTxt  $e")
                 // endregion
             }
         }
     }
     
-    inline fun <T> readDB(
-                                                                      logTxt: String,
+    inline fun <T> readDB(                                            logTxt: String,
                                                                 defaultValue: T,
                                                                       action: (SQLiteDatabase) -> T
     ): T {
@@ -80,14 +82,13 @@ open class LibDBHelper(                  context: Context,
                         readableDatabase.use { action(it) }
                     } catch (e: Exception) {
                         // region LOG
-                        Log.e(tag, "Error: $logTxt  $e")
+                            Log.e("LibDBHelper", "Error: $logTxt  $e")
                         // endregion
                         defaultValue
                     }
         }
     }
-    inline fun <T> readWriteDB(
-                                                                      logTxt: String,
+    inline fun <T> readWriteDB(                                       logTxt: String,
                                                                 defaultValue: T,
                                                                       action: (SQLiteDatabase) -> T
     ): T {
@@ -96,7 +97,7 @@ open class LibDBHelper(                  context: Context,
                         writableDatabase.use { action(it) }
                     } catch (e: Exception) {
                         // region LOG
-                        Log.e(tag, "Error: $logTxt  $e")
+                            Log.e("LibDBHelper", "Error: $logTxt  $e")
                         // endregion
                         defaultValue
                     }
