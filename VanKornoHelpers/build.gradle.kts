@@ -42,12 +42,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    // JUnit 5
-    testImplementation(libs.junit.jupiter.api)
-    testImplementation(libs.junit.jupiter.engine)
-    androidTestImplementation(libs.junit.jupiter.api)
-    androidTestImplementation(libs.junit.jupiter.engine)
     
+    testImplementation(libs.junit.jupiter) // JUnit 5
+    androidTestImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }

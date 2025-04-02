@@ -41,11 +41,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    // JUnit 5
-    testImplementation(libs.junit.jupiter.api)
-    testImplementation(libs.junit.jupiter.engine)
-    androidTestImplementation(libs.junit.jupiter.api)
-    androidTestImplementation(libs.junit.jupiter.engine)
+    
+    testImplementation(libs.junit.jupiter) // JUnit 5
+    androidTestImplementation(libs.junit.jupiter)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
     
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
