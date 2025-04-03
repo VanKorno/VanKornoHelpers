@@ -31,25 +31,18 @@ android {
     kotlinOptions {
         jvmTarget = "21"
     }
-    testOptions {
-        unitTests.all {
-            it.useJUnitPlatform() // Enables JUnit 5
-        }
-    }
 }
 
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    
-    testImplementation(libs.junit.jupiter) // JUnit 5
-    androidTestImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-val versionTag = "2.0.2"
+val versionTag = "2.3"
 //val buildDirectory = layout.buildDirectory.get()
 
 publishing {    /* to ensure that the library is published correctly */

@@ -4,11 +4,10 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import com.vankorno.vankornohelpers.sql.LibConstantsDB.InMemoryDB
 import com.vankorno.vankornohelpers.sql.entt.LibDbTableAndEntt
 
 open class LibDBHelper(               context: Context,
-                           private val dbName: String,
+                                       dbName: String,
                                     dbVersion: Int,
                          private val entities: Array<LibDbTableAndEntt> = emptyArray<LibDbTableAndEntt>(),
                             val onCreateStart: (SQLiteDatabase)->Unit = {},
@@ -24,9 +23,6 @@ open class LibDBHelper(               context: Context,
             Log.d("LibDBHelper", "onCreate runs")
         // endregion
         synchronized(dbLock) {
-            if (dbName == InMemoryDB)
-                db.execSQL("PRAGMA journal_mode = OFF")
-            
             onCreateStart(db)
             
             val libMiscDB = LibMiscDB(db)
