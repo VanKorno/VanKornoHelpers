@@ -5,6 +5,9 @@ import com.vankorno.vankornohelpers.values.LibConstants.ScreenMain
 
 object LibGlobals {
     @Volatile
+    var instrTestRun = false
+    
+    @Volatile
     var actRunning = false
     
     @Volatile

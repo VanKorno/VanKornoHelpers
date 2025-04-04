@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import com.vankorno.vankornohelpers.sql.LibConstantsDB.InMemoryDB
+import com.vankorno.vankornohelpers.values.LibGlobals.instrTestRun
 
 class LibMisc {
     
@@ -25,9 +27,14 @@ class LibMisc {
     }
     
     
+    fun isInstrumentedTestRun(): Boolean = try {
+        Class.forName("androidx.test.platform.app.InstrumentationRegistry")
+        true
+    } catch (e: ClassNotFoundException) {
+        false
+    }
     
-    
-    
+    fun getDbName(fileName: String) = if (instrTestRun)  InMemoryDB  else  fileName
     
     
     
