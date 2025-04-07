@@ -2,6 +2,7 @@ package com.vankorno.vankornohelpers.sql
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
+import com.vankorno.vankornohelpers.getBool
 import com.vankorno.vankornohelpers.sql.LibConstantsDB.*
 
 open class LibGetSetDB(val db: SQLiteDatabase) {
@@ -38,10 +39,10 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
                                                                             whereClause: String,
                                                                                whereArg: String
     ): Boolean {
-        val cursor = db.rawQuery(select + column + from + whichTable + where + whereClause+"=?"
-                                                                            ,arrayOf(whereArg) )
+        val cursor = db.rawQuery(select + column + from + whichTable + where + whereClause+"=?",
+                                                                              arrayOf(whereArg) )
         cursor.moveToFirst()
-        val mySocks = cursor.getInt(0) == 1
+        val mySocks = cursor.getBool(0)
         cursor.close()
         return mySocks
     }

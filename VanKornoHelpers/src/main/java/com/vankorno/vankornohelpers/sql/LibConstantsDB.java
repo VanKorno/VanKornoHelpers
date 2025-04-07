@@ -9,10 +9,15 @@ where=" WHERE ",
 
 c=", ", and=" AND ", or=" OR ",
 orderBy=" ORDER BY ", like=" LIKE ",
-dbInt=" INT", dbStr=" TEXT NOT NULL",
-dbBool=" BOOL", dbLong=" BIGINT", dbFloat=" REAL", dbBlob=" BLOB",
 ID="ID", descending=" DESC",
-dbAutoID = " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, ",
+dbAutoID = " (" + ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ",
+dbInt=" INT NOT NULL",
+dbStr=" TEXT NOT NULL",
+dbBool=" BOOL NOT NULL",
+dbLong=" BIGINT NOT NULL",
+dbFloat=" REAL NOT NULL",
+dbBlob=" BLOB NOT NULL",
+
 dbCreateT="CREATE TABLE ",
 dbDrop="DROP TABLE IF EXISTS ",
 

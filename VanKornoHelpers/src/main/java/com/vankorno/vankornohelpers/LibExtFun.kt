@@ -1,5 +1,6 @@
 package com.vankorno.vankornohelpers
 
+import android.database.Cursor
 import java.security.SecureRandom
 import java.util.Locale
 
@@ -15,6 +16,9 @@ fun Int.nextOrFirst(                                                  range: Int
         this + 1
     else
         range.first
+
+fun Cursor.getBool(col: Int) = this.getInt(col) == 1
+
 
 
 // =============================  FORMATTING  ==============================
@@ -64,5 +68,15 @@ fun String.toNoNullLong(                                                       d
     }
 
 
-inline fun Int.toNoZeroStr() = if (this == 0)  ""  else  this.toString()
+fun Int.toNoZeroStr() = if (this == 0)  ""  else  this.toString()
+
+
+
+
+
+
+
+
+
+
 
