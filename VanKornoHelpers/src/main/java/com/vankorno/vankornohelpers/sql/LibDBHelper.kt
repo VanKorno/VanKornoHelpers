@@ -4,7 +4,11 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.vankorno.vankornohelpers.sql.DbManager.db
+import com.vankorno.vankornohelpers.sql.LibConstantsDB.*
 import com.vankorno.vankornohelpers.sql.entt.LibDbTableAndEntt
+
+private const val TAG = "LibDBHelper"
 
 open class LibDBHelper(               context: Context,
                                        dbName: String,
@@ -17,37 +21,54 @@ open class LibDBHelper(               context: Context,
     val dbLock = Any()
     
     
-    override fun onCreate(                                                      db: SQLiteDatabase
+    override fun onCreate(                                                 dbLocal: SQLiteDatabase
     ) {
         // region LOG
-            Log.d("LibDBHelper", "onCreate runs")
+            Log.d(TAG, "onCreate runs")
         // endregion
         synchronized(dbLock) {
-            onCreateStart(db)
+            onCreateStart(dbLocal)
             
-            val libMiscDB = LibMiscDB(db)
             entities.forEach {
-                db.execSQL(libMiscDB.buildQuery(it.whichTable, it.entity))
+                dbLocal.execSQL(buildQuery(it.whichTable, it.entity))
             }
-            onCreateFinish(db)
+            onCreateFinish(dbLocal)
         }
     }
     
     
-    override fun onUpgrade(                                                     db: SQLiteDatabase,
+    override fun onUpgrade(                                                dbLocal: SQLiteDatabase,
                                                                         oldVersion: Int,
                                                                         newVersion: Int
     ) {
         if (oldVersion >= newVersion)  return  //\/\/\/\/\/\
         // region LOG
-            Log.d("LibDBHelper", "onUpgrade runs")
+            Log.d(TAG, "onUpgrade runs")
         // endregion
         synchronized(dbLock) {
-            onUpgrade(db)
+            onUpgrade(dbLocal)
         }
     }
     
+    fun initializeDbManager() {
+        // region LOG
+            Log.d(TAG, "initializeDbManager() runs")
+        // endregion
+        DbManager.init(this)
+    }
     
+    
+    fun buildQuery(                                             whichTable: String,
+                                                                    entity: ArrayList<Array<String>>
+    ): String {
+        var queryStr = dbCreateT + whichTable + dbAutoID
+        val last = entity.size - 1
+        
+        for (idx in 1 until last) {
+            queryStr += entity[idx][0] + entity[idx][1] + c
+        }
+        return queryStr + entity[last][0] + entity[last][1] + ")"
+    }
     
     
     
@@ -55,12 +76,12 @@ open class LibDBHelper(               context: Context,
     
     // -------------------------------------------------------------------------------------------
     
-    inline fun writeDB(                                              logTxt: String,
-                                                                        run: (SQLiteDatabase)->Unit
+    inline fun writeDB(                                                           logTxt: String,
+                                                                                     run: ()->Unit
     ) {
         synchronized(dbLock) {
             try {
-                writableDatabase.use { run(it) }
+                db.use { run() }
             } catch (e: Exception) {
                 // region LOG
                     Log.e("LibDBHelper", "Error: $logTxt  $e")
@@ -69,28 +90,13 @@ open class LibDBHelper(               context: Context,
         }
     }
     
-    inline fun <T> readDB(                                            logTxt: String,
-                                                                defaultValue: T,
-                                                                      action: (SQLiteDatabase) -> T
+    inline fun <T> readWriteDB(                                                   logTxt: String,
+                                                                            defaultValue: T,
+                                                                                  action: () -> T
     ): T {
         synchronized(dbLock) {
             return  try {
-                        readableDatabase.use { action(it) }
-                    } catch (e: Exception) {
-                        // region LOG
-                            Log.e("LibDBHelper", "Error: $logTxt  $e")
-                        // endregion
-                        defaultValue
-                    }
-        }
-    }
-    inline fun <T> readWriteDB(                                       logTxt: String,
-                                                                defaultValue: T,
-                                                                      action: (SQLiteDatabase) -> T
-    ): T {
-        synchronized(dbLock) {
-            return  try {
-                        writableDatabase.use { action(it) }
+                        db.use { action() }
                     } catch (e: Exception) {
                         // region LOG
                             Log.e("LibDBHelper", "Error: $logTxt  $e")
@@ -108,8 +114,8 @@ open class LibDBHelper(               context: Context,
                                                                                   column: String,
                                                                              whereClause: String,
                                                                                 whereArg: String
-    ): Int = readDB("getInt()", 0) { 
-        LibGetSetDB(it).getInt(whichTable, column, whereClause, whereArg)
+    ): Int = readWriteDB("getInt()", 0) { 
+        LibGetSetDB().getInt(whichTable, column, whereClause, whereArg)
     }
     
     
@@ -117,24 +123,24 @@ open class LibDBHelper(               context: Context,
                                                                                   column: String,
                                                                              whereClause: String,
                                                                                 whereArg: String
-    ): String = readDB("getString()", "") { 
-        LibGetSetDB(it).getString(whichTable, column, whereClause, whereArg)
+    ): String = readWriteDB("getString()", "") { 
+        LibGetSetDB().getString(whichTable, column, whereClause, whereArg)
     }
     
     fun getBool(                                                              whichTable: String,
                                                                                   column: String,
                                                                              whereClause: String,
                                                                                 whereArg: String
-    ): Boolean = readDB("getBool()", false) { 
-        LibGetSetDB(it).getBool(whichTable, column, whereClause, whereArg)
+    ): Boolean = readWriteDB("getBool()", false) { 
+        LibGetSetDB().getBool(whichTable, column, whereClause, whereArg)
     }
     
     fun getLong(                                                              whichTable: String,
                                                                                   column: String,
                                                                              whereClause: String,
                                                                                 whereArg: String
-    ): Long = readDB("getLong()", 0L) { 
-        LibGetSetDB(it).getLong(whichTable, column, whereClause, whereArg)
+    ): Long = readWriteDB("getLong()", 0L) { 
+        LibGetSetDB().getLong(whichTable, column, whereClause, whereArg)
     }
     
     // ============================== SETTERS ===========================================
@@ -146,7 +152,7 @@ open class LibDBHelper(               context: Context,
                                                                              whereArg: String
     ) {
         writeDB("set()") {
-            LibGetSetDB(it).set(value, whichTable, column, whereClause, whereArg)
+            LibGetSetDB().set(value, whichTable, column, whereClause, whereArg)
         }
     }
     fun set(                                                                     value: Int,
@@ -156,7 +162,7 @@ open class LibDBHelper(               context: Context,
                                                                               whereArg: String
     ) {
         writeDB("set()") {
-            LibGetSetDB(it).set(value, whichTable, column, whereClause, whereArg)
+            LibGetSetDB().set(value, whichTable, column, whereClause, whereArg)
         }
     }
     fun set(                                                                    value: Boolean,
@@ -166,7 +172,7 @@ open class LibDBHelper(               context: Context,
                                                                              whereArg: String
     ) {
         writeDB("set()") {
-            LibGetSetDB(it).set(value, whichTable, column, whereClause, whereArg)
+            LibGetSetDB().set(value, whichTable, column, whereClause, whereArg)
         }
     }
     fun set(                                                                    value: Long,
@@ -176,7 +182,7 @@ open class LibDBHelper(               context: Context,
                                                                              whereArg: String
     ) {
         writeDB("set()") {
-            LibGetSetDB(it).set(value, whichTable, column, whereClause, whereArg)
+            LibGetSetDB().set(value, whichTable, column, whereClause, whereArg)
         }
     }
     
@@ -185,17 +191,17 @@ open class LibDBHelper(               context: Context,
     
     
     fun checkIfEmpty(                                                         whichTable: String
-    ): Boolean = readDB("checkIfEmpty()", false) { 
-        LibGetSetDB(it).isEmpty(whichTable)
+    ): Boolean = readWriteDB("checkIfEmpty()", false) { 
+        LibGetSetDB().isEmpty(whichTable)
     }
     
     fun getLastID(                                                            whichTable: String
-    ): Int = readDB("getLastID()", 0) { LibGetSetDB(it).getLastID(whichTable) }
+    ): Int = readWriteDB("getLastID()", 0) { LibGetSetDB().getLastID(whichTable) }
     
     
     
     fun deleteFirstRow(whichTable: String) = writeDB("deleteFirstRow()") {
-        LibMiscDB(it).deleteFirstRow(whichTable)
+        LibMiscDB().deleteFirstRow(whichTable)
     }
     
     

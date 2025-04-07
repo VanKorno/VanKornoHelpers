@@ -8,7 +8,7 @@ deleteFrom="DELETE FROM ",
 where=" WHERE ",
 
 c=", ", and=" AND ", or=" OR ",
-orderBy=" ORDER BY ", like=" LIKE ",
+orderBy=" ORDER BY ", like=" LIKE ", limit=" LIMIT ",
 ID="ID", descending=" DESC",
 dbAutoID = " (" + ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ",
 dbInt=" INT NOT NULL",
@@ -20,6 +20,7 @@ dbBlob=" BLOB NOT NULL",
 
 dbCreateT="CREATE TABLE ",
 dbDrop="DROP TABLE IF EXISTS ",
+RowID="ROWID",
 
     // TABLES
 TTTMisc="TTTMisc", TTTUndo="TTTUndo", TTTSettings="TTTSettings", TTTStats="TTTStats",
