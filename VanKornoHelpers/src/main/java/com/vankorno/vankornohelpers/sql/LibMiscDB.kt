@@ -1,9 +1,9 @@
 package com.vankorno.vankornohelpers.sql
 
-import com.vankorno.vankornohelpers.sql.DbManager.db
+import android.database.sqlite.SQLiteDatabase
 import com.vankorno.vankornohelpers.sql.LibConstantsDB.*
 
-class LibMiscDB() {
+class LibMiscDB(val db: SQLiteDatabase) {
     
     fun deleteFirstRow(                                                      whichTable: String
     ) {
@@ -11,6 +11,17 @@ class LibMiscDB() {
         db.delete(whichTable, whereClause, null)
     }
     
+    fun buildQuery(                                             whichTable: String,
+                                                                    entity: ArrayList<Array<String>>
+    ): String {
+        var queryStr = dbCreateT + whichTable + dbAutoID
+        val last = entity.size - 1
+        
+        for (ii in 1 until last) {
+            queryStr += entity[ii][0] + entity[ii][1] + c
+        }
+        return queryStr + entity[last][0] + entity[last][1] + ")"
+    }
     
     
     

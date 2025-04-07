@@ -1,11 +1,11 @@
 package com.vankorno.vankornohelpers.sql
 
 import android.content.ContentValues
+import android.database.sqlite.SQLiteDatabase
 import com.vankorno.vankornohelpers.getBool
-import com.vankorno.vankornohelpers.sql.DbManager.db
 import com.vankorno.vankornohelpers.sql.LibConstantsDB.*
 
-open class LibGetSetDB() {
+open class LibGetSetDB(val db: SQLiteDatabase) {
     
     // ============================== GETTERS ===========================================
     

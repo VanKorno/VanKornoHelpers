@@ -3,22 +3,22 @@ package com.vankorno.vankornohelpers.sql
 import android.database.sqlite.SQLiteDatabase
 
 object DbManager {
-    private lateinit var _db: SQLiteDatabase
+    private lateinit var _mainDb: SQLiteDatabase
     
-    val db: SQLiteDatabase
+    val mainDb: SQLiteDatabase
         get() {
-            if (!::_db.isInitialized) {
+            if (!::_mainDb.isInitialized) {
                 throw IllegalStateException("Database not initialized. Ensure LibDBHelper is properly set up.")
             }
-            return _db
+            return _mainDb
         }
 
     fun init(helper: LibDBHelper) {
-        _db = helper.writableDatabase
+        _mainDb = helper.writableDatabase
     }
 
     fun close() {
-        if (::_db.isInitialized && _db.isOpen)
-            _db.close()
+        if (::_mainDb.isInitialized && _mainDb.isOpen)
+            _mainDb.close()
     }
 }
