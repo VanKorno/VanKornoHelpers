@@ -2,8 +2,12 @@ package com.vankorno.vankornohelpers.sql
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
+import android.util.Log
 import com.vankorno.vankornohelpers.getBool
 import com.vankorno.vankornohelpers.sql.LibConstantsDB.*
+import com.vankorno.vankornohelpers.values.LibConstants.iOFF
+
+private const val TAG = ""
 
 open class LibGetSetDB(val db: SQLiteDatabase) {
     
@@ -16,8 +20,14 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
     ): Int {
         val cursor = db.rawQuery(select + column + from + whichTable + where + whereClause+"=?",
                                                                                arrayOf(whereArg) )
-        cursor.moveToFirst()
-        val mySocks = cursor.getInt(0)
+        val mySocks =   if (cursor.moveToFirst())
+                            cursor.getInt(0)
+                        else {
+                            // region LOG
+                            Log.e(TAG, "getInt() Unable to get value from DB. Returning zero")
+                            // endregion
+                            0
+                        }
         cursor.close()
         return mySocks
     }
@@ -29,8 +39,14 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
     ): String {
         val cursor = db.rawQuery(select + column + from + whichTable + where + whereClause+"=?",
                                                                                 arrayOf(whereArg) )
-        cursor.moveToFirst()
-        val mySocks = cursor.getString(0)
+        val mySocks =   if (cursor.moveToFirst())
+                            cursor.getString(0)
+                        else {
+                            // region LOG
+                            Log.e(TAG, "getString() Unable to get value from DB. Returning an empty str")
+                            // endregion
+                            ""
+                        }
         cursor.close()
         return mySocks
     }
@@ -41,8 +57,14 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
     ): Boolean {
         val cursor = db.rawQuery(select + column + from + whichTable + where + whereClause+"=?",
                                                                               arrayOf(whereArg) )
-        cursor.moveToFirst()
-        val mySocks = cursor.getBool(0)
+        val mySocks =   if (cursor.moveToFirst())
+                            cursor.getBool(0)
+                        else {
+                            // region LOG
+                            Log.e(TAG, "getBool() Unable to get value from DB. Returning FALSE")
+                            // endregion
+                            false
+                        }
         cursor.close()
         return mySocks
     }
@@ -53,8 +75,14 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
     ): Long {
         val cursor = db.rawQuery(select + column + from + whichTable + where + whereClause+"=?",
                                                                               arrayOf(whereArg) )
-        cursor.moveToFirst()
-        val mySocks = cursor.getLong(0)
+        val mySocks =   if (cursor.moveToFirst())
+                            cursor.getLong(0)
+                        else {
+                            // region LOG
+                            Log.e(TAG, "getLong() Unable to get value from DB. Returning zero")
+                            // endregion
+                            0L
+                        }
         cursor.close()
         return mySocks
     }
@@ -68,8 +96,12 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
         
         val mySocks = if (cursor.moveToLast())
                             cursor.getInt(0)
-                        else
-                            -1
+                        else{
+                            // region LOG
+                            Log.e(TAG, "getLastID() Unable to get value from DB. Returning $iOFF")
+                            // endregion
+                            iOFF
+                        }
         cursor.close()
         return mySocks
     }
@@ -99,12 +131,11 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
     
     fun getNewPriority(                                                       whichTable: String
     ): Int {
-        var priority = 1
         val cursor = db.rawQuery(select + Priority + from + whichTable + orderBy + Priority,  null)
-        if (cursor.count > 0) {
-            cursor.moveToLast()
-            priority = cursor.getInt(0) + 1
-        }
+        var priority =  if (cursor.moveToLast())
+                            cursor.getInt(0) + 1
+                        else
+                            1
         cursor.close()
         return priority
     }
