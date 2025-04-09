@@ -32,7 +32,7 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
         return mySocks
     }
     
-    fun getString(                                                           tableName: String,
+    fun getStr(                                                              tableName: String,
                                                                                 column: String,
                                                                            whereClause: String,
                                                                               whereArg: String

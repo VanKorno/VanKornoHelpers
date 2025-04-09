@@ -114,7 +114,7 @@ open class LibDBHelper(               context: Context,
                                                                   whereArg: String,
                                                                         db: SQLiteDatabase = mainDb
     ): String = readWriteDB("getStr()", "") { 
-        LibGetSetDB(db).getString(tableName, column, whereClause, whereArg)
+        LibGetSetDB(db).getStr(tableName, column, whereClause, whereArg)
     }
     
     fun getBool(                                                 tableName: String,
