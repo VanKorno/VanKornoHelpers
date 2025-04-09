@@ -5,20 +5,20 @@ import com.vankorno.vankornohelpers.sql.LibConstantsDB.*
 
 class LibMiscDB(val db: SQLiteDatabase) {
     
-    fun deleteFirstRow(                                                      whichTable: String
+    fun deleteFirstRow(                                                       tableName: String
     ) {
-        val whereClause = RowID + " = (" + select + RowID + from + whichTable+ limit + "1)"
-        db.delete(whichTable, whereClause, null)
+        val whereClause = RowID + " = (" + select + RowID + from + tableName+ limit + "1)"
+        db.delete(tableName, whereClause, null)
     }
     
-    fun buildQuery(                                             whichTable: String,
+    fun buildQuery(                                              tableName: String,
                                                                     entity: ArrayList<Array<String>>
     ): String {
-        var queryStr = dbCreateT + whichTable + dbAutoID
+        var queryStr = dbCreateT + tableName + dbAutoID
         val last = entity.size - 1
         
-        for (ii in 1 until last) {
-            queryStr += entity[ii][0] + entity[ii][1] + c
+        for (idx in 1 until last) {
+            queryStr += entity[idx][0] + entity[idx][1] + c
         }
         return queryStr + entity[last][0] + entity[last][1] + ")"
     }

@@ -13,12 +13,12 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
     
     // ============================== GETTERS ===========================================
     
-    fun getInt(                                                             whichTable: String,
+    fun getInt(                                                              tableName: String,
                                                                                 column: String,
                                                                            whereClause: String,
                                                                               whereArg: String
     ): Int {
-        val cursor = db.rawQuery(select + column + from + whichTable + where + whereClause+"=?",
+        val cursor = db.rawQuery(select + column + from + tableName + where + whereClause+"=?",
                                                                                arrayOf(whereArg) )
         val mySocks =   if (cursor.moveToFirst())
                             cursor.getInt(0)
@@ -32,12 +32,12 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
         return mySocks
     }
     
-    fun getString(                                                          whichTable: String,
+    fun getString(                                                           tableName: String,
                                                                                 column: String,
                                                                            whereClause: String,
                                                                               whereArg: String
     ): String {
-        val cursor = db.rawQuery(select + column + from + whichTable + where + whereClause+"=?",
+        val cursor = db.rawQuery(select + column + from + tableName + where + whereClause+"=?",
                                                                                 arrayOf(whereArg) )
         val mySocks =   if (cursor.moveToFirst())
                             cursor.getString(0)
@@ -50,12 +50,12 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
         cursor.close()
         return mySocks
     }
-    fun getBool(                                                             whichTable: String,
+    fun getBool(                                                              tableName: String,
                                                                                  column: String,
                                                                             whereClause: String,
                                                                                whereArg: String
     ): Boolean {
-        val cursor = db.rawQuery(select + column + from + whichTable + where + whereClause+"=?",
+        val cursor = db.rawQuery(select + column + from + tableName + where + whereClause+"=?",
                                                                               arrayOf(whereArg) )
         val mySocks =   if (cursor.moveToFirst())
                             cursor.getBool(0)
@@ -68,12 +68,12 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
         cursor.close()
         return mySocks
     }
-    fun getLong(                                                            whichTable: String,
+    fun getLong(                                                             tableName: String,
                                                                                 column: String,
                                                                            whereClause: String,
                                                                               whereArg: String
     ): Long {
-        val cursor = db.rawQuery(select + column + from + whichTable + where + whereClause+"=?",
+        val cursor = db.rawQuery(select + column + from + tableName + where + whereClause+"=?",
                                                                               arrayOf(whereArg) )
         val mySocks =   if (cursor.moveToFirst())
                             cursor.getLong(0)
@@ -86,13 +86,32 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
         cursor.close()
         return mySocks
     }
+    fun getFloat(                                                             tableName: String,
+                                                                                column: String,
+                                                                           whereClause: String,
+                                                                              whereArg: String
+    ): Float {
+        val cursor = db.rawQuery(select + column + from + tableName + where + whereClause+"=?",
+                                                                              arrayOf(whereArg) )
+        val mySocks =   if (cursor.moveToFirst())
+                            cursor.getFloat(0)
+                        else {
+                            // region LOG
+                            Log.e(TAG, "getFloat() Unable to get value from DB. Returning zero")
+                            // endregion
+                            0F
+                        }
+        cursor.close()
+        return mySocks
+    }
+    
     
     
     // ----------------------------------------------------------------------------------
     
-    fun getLastID(                                                            whichTable: String
+    fun getLastID(                                                            tableName: String
     ): Int {
-        val cursor = db.rawQuery(select + ID + from + whichTable, null)
+        val cursor = db.rawQuery(select + ID + from + tableName, null)
         
         val mySocks = if (cursor.moveToLast())
                             cursor.getInt(0)
@@ -106,10 +125,10 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
         return mySocks
     }
     
-    fun getAllIDs(                                                          whichTable: String,
+    fun getAllIDs(                                                           tableName: String,
                                                                             orderByStr: String = ""
     ): MutableList<Int> {
-        val cursor = db.rawQuery(select + ID + from + whichTable + orderByStr,   null)
+        val cursor = db.rawQuery(select + ID + from + tableName + orderByStr,   null)
         val ids = mutableListOf<Int>()
         
         if (cursor.moveToFirst()) {
@@ -121,17 +140,17 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
         return ids
     }
     
-    fun isEmpty(                                                              whichTable: String
+    fun isEmpty(                                                               tableName: String
     ): Boolean {
-        val cursor = db.rawQuery(selectAllFrom + whichTable, null)
+        val cursor = db.rawQuery(selectAllFrom + tableName, null)
         val emptiness = cursor.count < 1
         cursor.close()
         return emptiness
     }
     
-    fun getNewPriority(                                                       whichTable: String
+    fun getNewPriority(                                                        tableName: String
     ): Int {
-        val cursor = db.rawQuery(select + Priority + from + whichTable + orderBy + Priority,  null)
+        val cursor = db.rawQuery(select + Priority + from + tableName + orderBy + Priority,  null)
         var priority =  if (cursor.moveToLast())
                             cursor.getInt(0) + 1
                         else
@@ -144,45 +163,55 @@ open class LibGetSetDB(val db: SQLiteDatabase) {
     
     // ============================== SETTERS ===========================================
     
-    fun set(                                                                    value: String,
-                                                                           whichTable: String,
+    fun setStr(                                                                 value: String,
+                                                                            tableName: String,
                                                                                column: String,
                                                                           whereClause: String,
                                                                              whereArg: String
     ) {
         val cv = ContentValues()
         cv.put(column, value)
-        db.update(whichTable, cv, whereClause+"=?", arrayOf(whereArg))
+        db.update(tableName, cv, whereClause+"=?", arrayOf(whereArg))
     }
-    fun set(                                                                     value: Int,
-                                                                            whichTable: String,
+    fun setInt(                                                                  value: Int,
+                                                                             tableName: String,
                                                                                 column: String,
                                                                            whereClause: String,
                                                                               whereArg: String
     ) {
         val cv = ContentValues()
         cv.put(column, value)
-        db.update(whichTable, cv, whereClause+"=?", arrayOf(whereArg))
+        db.update(tableName, cv, whereClause+"=?", arrayOf(whereArg))
     }
-    fun set(                                                                    value: Boolean,
-                                                                           whichTable: String,
+    fun setBool(                                                                value: Boolean,
+                                                                            tableName: String,
                                                                                column: String,
                                                                           whereClause: String,
                                                                              whereArg: String
     ) {
         val cv = ContentValues()
         cv.put(column, value)
-        db.update(whichTable, cv, whereClause+"=?", arrayOf(whereArg))
+        db.update(tableName, cv, whereClause+"=?", arrayOf(whereArg))
     }
-    fun set(                                                                    value: Long,
-                                                                           whichTable: String,
+    fun setLong(                                                                value: Long,
+                                                                            tableName: String,
                                                                                column: String,
                                                                           whereClause: String,
                                                                              whereArg: String
     ) {
         val cv = ContentValues()
         cv.put(column, value)
-        db.update(whichTable, cv, whereClause+"=?", arrayOf(whereArg))
+        db.update(tableName, cv, whereClause+"=?", arrayOf(whereArg))
+    }
+    fun setFloat(                                                               value: Float,
+                                                                            tableName: String,
+                                                                               column: String,
+                                                                          whereClause: String,
+                                                                             whereArg: String
+    ) {
+        val cv = ContentValues()
+        cv.put(column, value)
+        db.update(tableName, cv, whereClause+"=?", arrayOf(whereArg))
     }
     
     

@@ -30,7 +30,7 @@ open class LibDBHelper(               context: Context,
             
             val libMiscDB = LibMiscDB(db)
             entities.forEach {
-                db.execSQL(libMiscDB.buildQuery(it.whichTable, it.entity))
+                db.execSQL(libMiscDB.buildQuery(it.tableName, it.entity))
             }
             onCreateFinish(db)
         }
@@ -43,7 +43,7 @@ open class LibDBHelper(               context: Context,
     ) {
         if (oldVersion >= newVersion)  return  //\/\/\/\/\/\
         // region LOG
-            Log.d(TAG, "onUpgrade runs")
+            Log.d(TAG, "onUpgrade() Migrating...")
         // endregion
         synchronized(dbLock) {
             onUpgrade(db)
@@ -99,87 +99,110 @@ open class LibDBHelper(               context: Context,
     
     // ============================== GETTERS ===========================================
     
-    fun getInt(                                                 whichTable: String,
+    fun getInt(                                                  tableName: String,
                                                                     column: String,
                                                                whereClause: String,
                                                                   whereArg: String,
                                                                         db: SQLiteDatabase = mainDb
     ): Int = readWriteDB("getInt()", 0) { 
-        LibGetSetDB(db).getInt(whichTable, column, whereClause, whereArg)
+        LibGetSetDB(db).getInt(tableName, column, whereClause, whereArg)
     }
     
-    
-    fun getString(                                              whichTable: String,
+    fun getStr(                                                  tableName: String,
                                                                     column: String,
                                                                whereClause: String,
                                                                   whereArg: String,
                                                                         db: SQLiteDatabase = mainDb
-    ): String = readWriteDB("getString()", "") { 
-        LibGetSetDB(db).getString(whichTable, column, whereClause, whereArg)
+    ): String = readWriteDB("getStr()", "") { 
+        LibGetSetDB(db).getString(tableName, column, whereClause, whereArg)
     }
     
-    fun getBool(                                                whichTable: String,
+    fun getBool(                                                 tableName: String,
                                                                     column: String,
                                                                whereClause: String,
                                                                   whereArg: String,
                                                                         db: SQLiteDatabase = mainDb
     ): Boolean = readWriteDB("getBool()", false) { 
-        LibGetSetDB(db).getBool(whichTable, column, whereClause, whereArg)
+        LibGetSetDB(db).getBool(tableName, column, whereClause, whereArg)
     }
     
-    fun getLong(                                                whichTable: String,
+    fun getLong(                                                 tableName: String,
                                                                     column: String,
                                                                whereClause: String,
                                                                   whereArg: String,
                                                                         db: SQLiteDatabase = mainDb
     ): Long = readWriteDB("getLong()", 0L) { 
-        LibGetSetDB(db).getLong(whichTable, column, whereClause, whereArg)
+        LibGetSetDB(db).getLong(tableName, column, whereClause, whereArg)
     }
+    
+    fun getFloat(                                                tableName: String,
+                                                                    column: String,
+                                                               whereClause: String,
+                                                                  whereArg: String,
+                                                                        db: SQLiteDatabase = mainDb
+    ): Float = readWriteDB("getFloat()", 0F) { 
+        LibGetSetDB(db).getFloat(tableName, column, whereClause, whereArg)
+    }
+    
+    
+    
+    
     
     // ============================== SETTERS ===========================================
     
-    fun set(                                                         value: String,
-                                                                whichTable: String,
+    fun setStr(                                                      value: String,
+                                                                 tableName: String,
                                                                     column: String,
                                                                whereClause: String,
                                                                   whereArg: String,
                                                                         db: SQLiteDatabase = mainDb
     ) {
-        writeDB("set()") {
-            LibGetSetDB(db).set(value, whichTable, column, whereClause, whereArg)
+        writeDB("setStr()") {
+            LibGetSetDB(db).setStr(value, tableName, column, whereClause, whereArg)
         }
     }
-    fun set(                                                         value: Int,
-                                                                whichTable: String,
+    fun setInt(                                                      value: Int,
+                                                                 tableName: String,
                                                                     column: String,
                                                                whereClause: String,
                                                                   whereArg: String,
                                                                         db: SQLiteDatabase = mainDb
     ) {
-        writeDB("set()") {
-            LibGetSetDB(db).set(value, whichTable, column, whereClause, whereArg)
+        writeDB("setInt()") {
+            LibGetSetDB(db).setInt(value, tableName, column, whereClause, whereArg)
         }
     }
-    fun set(                                                         value: Boolean,
-                                                                whichTable: String,
+    fun setBool(                                                     value: Boolean,
+                                                                 tableName: String,
                                                                     column: String,
                                                                whereClause: String,
                                                                   whereArg: String,
                                                                         db: SQLiteDatabase = mainDb
     ) {
-        writeDB("set()") {
-            LibGetSetDB(db).set(value, whichTable, column, whereClause, whereArg)
+        writeDB("setBool()") {
+            LibGetSetDB(db).setBool(value, tableName, column, whereClause, whereArg)
         }
     }
-    fun set(                                                         value: Long,
-                                                                whichTable: String,
+    fun setLong(                                                     value: Long,
+                                                                 tableName: String,
                                                                     column: String,
                                                                whereClause: String,
                                                                   whereArg: String,
                                                                         db: SQLiteDatabase = mainDb
     ) {
-        writeDB("set()") {
-            LibGetSetDB(db).set(value, whichTable, column, whereClause, whereArg)
+        writeDB("setLong()") {
+            LibGetSetDB(db).setLong(value, tableName, column, whereClause, whereArg)
+        }
+    }
+    fun setFloat(                                                    value: Float,
+                                                                 tableName: String,
+                                                                    column: String,
+                                                               whereClause: String,
+                                                                  whereArg: String,
+                                                                        db: SQLiteDatabase = mainDb
+    ) {
+        writeDB("setFloat()") {
+            LibGetSetDB(db).setFloat(value, tableName, column, whereClause, whereArg)
         }
     }
     
@@ -187,22 +210,22 @@ open class LibDBHelper(               context: Context,
     
     
     
-    fun checkIfEmpty(                                           whichTable: String,
+    fun checkIfEmpty(                                            tableName: String,
                                                                         db: SQLiteDatabase = mainDb
     ): Boolean = readWriteDB("checkIfEmpty()", false) { 
-        LibGetSetDB(db).isEmpty(whichTable)
+        LibGetSetDB(db).isEmpty(tableName)
     }
     
-    fun getLastID(                                              whichTable: String,
+    fun getLastID(                                               tableName: String,
                                                                         db: SQLiteDatabase = mainDb
-    ): Int = readWriteDB("getLastID()", 0) { LibGetSetDB(db).getLastID(whichTable) }
+    ): Int = readWriteDB("getLastID()", 0) { LibGetSetDB(db).getLastID(tableName) }
     
     
     
-    fun deleteFirstRow(                                         whichTable: String,
+    fun deleteFirstRow(                                          tableName: String,
                                                                         db: SQLiteDatabase = mainDb
     ) = writeDB("deleteFirstRow()") {
-        LibMiscDB(db).deleteFirstRow(whichTable)
+        LibMiscDB(db).deleteFirstRow(tableName)
     }
     
     
