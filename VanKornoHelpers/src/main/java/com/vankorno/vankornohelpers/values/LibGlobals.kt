@@ -1,7 +1,6 @@
 package com.vankorno.vankornohelpers.values
 
 import com.vankorno.vankornohelpers.values.LibConstants.LangAuto
-import com.vankorno.vankornohelpers.values.LibConstants.ScreenMain
 
 object LibGlobals {
     @Volatile
@@ -26,6 +25,4 @@ object LibGlobals {
     
     var language = LangAuto
     
-    @Volatile
-    var currScreen = ScreenMain
 }
