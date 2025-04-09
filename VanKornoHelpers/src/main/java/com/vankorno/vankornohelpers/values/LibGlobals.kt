@@ -7,6 +7,9 @@ object LibGlobals {
     var instrTestRun = false
     
     @Volatile
+    var unitTestRun = false
+    
+    @Volatile
     var actRunning = false
     
     @Volatile
@@ -24,5 +27,6 @@ object LibGlobals {
     var screenDensity = 0.0f
     
     var language = LangAuto
+    
     
 }
