@@ -1,19 +1,31 @@
+# Gradle
+.gradle/
+build/
+
+# IDE
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+*.ipr
+*.iws
+
+# OS / Misc
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+Thumbs.db
+
+# Android
 local.properties
-/.idea/studiobot.xml
-/.idea/runConfigurations.xml
-/.kotlin/errors
-/.idea/AndroidProjectSystem.xml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Kotlin compiler
+.kotlinc/
+
+# AARs / Artifacts (for libraries)
+*.aar
+*.jar
+*.module
+*.pom
+
+# Log files
+*.log

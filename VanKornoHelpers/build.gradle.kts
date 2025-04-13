@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.android)
     id("maven-publish")
 }
 
@@ -37,13 +37,13 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-val versionTag = "2.16"
-//val buildDirectory = layout.buildDirectory.get()
+val versionTag = System.getenv("VERSION") ?: "unspecified"
 
 publishing {    /* to ensure that the library is published correctly */
     publications {

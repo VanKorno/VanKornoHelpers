@@ -1,6 +1,5 @@
 package com.vankorno.vankornohelpers
 
-import android.database.Cursor
 import java.security.SecureRandom
 import java.util.Locale
 
@@ -17,7 +16,7 @@ fun Int.nextOrFirst(                                                  range: Int
     else
         range.first
 
-fun Cursor.getBool(col: Int) = this.getInt(col) == 1
+
 
 
 

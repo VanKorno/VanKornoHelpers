@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
-import com.vankorno.vankornohelpers.sql.LibConstantsDB.InMemoryDB
 import com.vankorno.vankornohelpers.values.LibGlobals.instrTestRun
 
 class LibMisc {
@@ -34,7 +33,7 @@ class LibMisc {
         false
     }
     
-    fun getDbName(fileName: String) = if (instrTestRun)  InMemoryDB  else  fileName
+    fun getDbName(fileName: String) = if (instrTestRun)  ":memory:"  else  fileName
     
     
     
