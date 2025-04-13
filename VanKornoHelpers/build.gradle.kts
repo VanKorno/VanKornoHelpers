@@ -45,7 +45,7 @@ dependencies {
 
 val versionTag = System.getenv("VERSION") ?: "unspecified"
 
-publishing {    /* to ensure that the library is published correctly */
+publishing {
     publications {
         create<MavenPublication>("release") {
             afterEvaluate {
