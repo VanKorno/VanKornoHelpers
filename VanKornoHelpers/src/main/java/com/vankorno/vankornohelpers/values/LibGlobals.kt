@@ -4,20 +4,11 @@ import com.vankorno.vankornohelpers.values.LibConstants.LangAuto
 
 object LibGlobals {
     @Volatile
-    var instrTestRun = false
-    
-    @Volatile
-    var unitTestRun = false
-    
-    @Volatile
     var actRunning = false
-    
     @Volatile
     var actExists = false
-    
     @Volatile
     var appStarted = false
-    
     @Volatile
     var actPaused = false
     
@@ -27,6 +18,18 @@ object LibGlobals {
     var screenDensity = 0.0f
     
     var language = LangAuto
+    
+    
+    @Volatile
+    var androidTestRun = false
+    @Volatile
+    var unitTestRun = false
+    @Volatile
+    var debugBuild = false
+    
+    @Volatile
+    var eLogInUI = false
+    
     
     
 }
