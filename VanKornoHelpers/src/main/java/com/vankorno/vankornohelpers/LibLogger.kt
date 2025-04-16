@@ -21,6 +21,17 @@ fun dLog(                                                                       
         Log.d(tag, msg)
 }
 
+fun wLog(                                                                            tag: String,
+                                                                                     msg: String
+) {
+    if (!debugBuild)  return  //\/\/\/\/\/\
+    
+    if (unitTestRun)
+        println("Warning ($tag): $msg")
+    else
+        Log.w(tag, msg)
+}
+
 
 fun eLog(                                                                    tag: String,
                                                                              msg: String,
