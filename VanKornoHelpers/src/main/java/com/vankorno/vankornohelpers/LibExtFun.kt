@@ -22,7 +22,8 @@ fun Int.nextOrFirst(                                                  range: Int
 
 // =============================  FORMATTING  ==============================
 
-fun standardiseInputOutput(txt: String) = txt.replace("\r", "\n")
+fun normalizeNewlines(txt: String): String = txt.replace("\r\n", "\n").replace("\r", "\n")
+
 
 fun String.toPolitCorrect() = this.replace(Regex("russia\\b", RegexOption.IGNORE_CASE), "moskovia")
 
