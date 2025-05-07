@@ -30,6 +30,17 @@ object LibGlobals {
     @Volatile
     var eLogInUI = false
     
+    @Volatile
+    var intForUnitTests = 0
+    @Volatile
+    var strForUnitTests = ""
+    
+    @Volatile
+    var intForAndroidTests = 0
+    @Volatile
+    var strForAndroidTests = ""
+    
+    
     
     
 }
