@@ -40,6 +40,7 @@ object LibGlobals {
     @Volatile
     var strForAndroidTests = ""
     
-    
+    @Volatile
+    var simulatedTime = 0L
     
 }

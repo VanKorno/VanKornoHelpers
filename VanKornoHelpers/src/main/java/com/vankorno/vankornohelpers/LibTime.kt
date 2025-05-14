@@ -1,13 +1,13 @@
 package com.vankorno.vankornohelpers
 
 import com.vankorno.vankornohelpers.values.LibGlobals.androidTestRun
+import com.vankorno.vankornohelpers.values.LibGlobals.simulatedTime
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 
 private const val TAG = "TimeProvider"
-var simulatedTime = 0L
 
 
 fun getCurrTime() = if (androidTestRun) {
