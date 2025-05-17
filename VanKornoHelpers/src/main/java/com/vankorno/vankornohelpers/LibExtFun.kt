@@ -17,6 +17,8 @@ fun Int.nextOrFirst(                                                  range: Int
         range.first
 
 
+fun Boolean.toByte(): Byte = if (this) 1 else 0
+fun Boolean.toInt(): Int = if (this) 1 else 0
 
 
 
