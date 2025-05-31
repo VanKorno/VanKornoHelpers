@@ -1,11 +1,7 @@
 package com.vankorno.vankornohelpers.util
 
 import com.vankorno.vankornohelpers.eLog
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.*
 
 object LibCoroutines {
     val IO = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -33,4 +29,11 @@ object LibCoroutines {
         }
     }
     
+    
+    fun <T> blockingIO(                                                     block: suspend () -> T
+    ): T = runBlocking {
+        withContext(Dispatchers.IO) {
+            block()
+        }
+    }
 }
