@@ -30,7 +30,7 @@ object LibCoroutines {
     }
     
     
-    fun <T> blockingIO(                                                     block: suspend () -> T
+    fun <T> blockingIO(                                                       block: suspend ()->T
     ): T = runBlocking {
         withContext(Dispatchers.IO) {
             block()
