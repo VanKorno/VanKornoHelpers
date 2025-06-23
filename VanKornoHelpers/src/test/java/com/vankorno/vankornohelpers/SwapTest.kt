@@ -79,4 +79,59 @@ class SwapTest : BaseUnitTest() {
     }
     
     
+    @Test
+    fun `List swapWithFirst swaps element with first`() {
+        val original = listOf("a", "b", "c", "d")
+        val swapped = original.swapWithFirst(2)
+        assertEquals(listOf("c", "b", "a", "d"), swapped)
+    }
+
+    @Test
+    fun `List swapWithFirst with index 0 returns original list`() {
+        val original = listOf(1, 2, 3)
+        val swapped = original.swapWithFirst(0)
+        assertEquals(original, swapped)
+    }
+
+    @Test
+    fun `List swapWithLast swaps element with last`() {
+        val original = listOf("x", "y", "z")
+        val swapped = original.swapWithLast(0)
+        assertEquals(listOf("z", "y", "x"), swapped)
+    }
+
+    @Test
+    fun `List swapWithLast with last index returns original list`() {
+        val original = listOf(5, 6, 7)
+        val swapped = original.swapWithLast(2)
+        assertEquals(original, swapped)
+    }
+
+    @Test
+    fun `ArrayList swapWithFirst swaps element with first in place`() {
+        val list = arrayListOf("p", "q", "r")
+        list.swapWithFirst(2)
+        assertEquals(listOf("r", "q", "p"), list)
+    }
+
+    @Test
+    fun `ArrayList swapWithFirst with index 0 does nothing`() {
+        val list = arrayListOf(10, 20, 30)
+        list.swapWithFirst(0)
+        assertEquals(listOf(10, 20, 30), list)
+    }
+
+    @Test
+    fun `ArrayList swapWithLast swaps element with last in place`() {
+        val list = arrayListOf("a", "b", "c")
+        list.swapWithLast(0)
+        assertEquals(listOf("c", "b", "a"), list)
+    }
+
+    @Test
+    fun `ArrayList swapWithLast with last index does nothing`() {
+        val list = arrayListOf(1, 2, 3)
+        list.swapWithLast(2)
+        assertEquals(listOf(1, 2, 3), list)
+    }
 }

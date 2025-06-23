@@ -8,6 +8,14 @@ fun <T> ArrayList<T>.swapWithPrev(idx: Int) = swapArrayListElements(this, idx, i
 
 
 
+fun <T> List<T>.swapWithFirst(idx: Int): List<T> = swapListElements(this, idx, 0)
+fun <T> List<T>.swapWithLast(idx: Int): List<T> = swapListElements(this, idx, lastIndex)
+
+fun <T> ArrayList<T>.swapWithFirst(idx: Int) = swapArrayListElements(this, idx, 0)
+fun <T> ArrayList<T>.swapWithLast(idx: Int) = swapArrayListElements(this, idx, lastIndex)
+
+
+
 private fun <T> swapListElements(list: List<T>, idx1: Int, idx2: Int): List<T> {
     if (idx1 !in list.indices || idx2 !in list.indices) {
         // region LOG
