@@ -41,21 +41,20 @@ fun String.toPolitCorrect() = this.replace(Regex("russia\\b", RegexOption.IGNORE
 fun Int.secToMinSec() = String.format(Locale.getDefault(), "%d:%02d", this / 60, this % 60)
 
 
-fun Int.shortenNumStr(): String {
-        return if (this > -10000) {
-            if (this < 10000)
-                ""+this
-            else if (this < 1000000)
-                this.toString().dropLast(3) + "K"
-            else
-                this.toString().dropLast(6) + "M"
-        }
-        else {
-            if (this > -1000000)
-                this.toString().dropLast(3) + "K"
-            else
-                this.toString().dropLast(6) + "M"
-        }
+fun Int.shortenNumStr(): String = 
+    if (this > -10000) {
+        if (this < 10000)
+            ""+this
+        else if (this < 1000000)
+            this.toString().dropLast(3) + "K"
+        else
+            this.toString().dropLast(6) + "M"
+    }
+    else {
+        if (this > -1000000)
+            this.toString().dropLast(3) + "K"
+        else
+            this.toString().dropLast(6) + "M"
     }
 
 
@@ -79,9 +78,6 @@ fun String.toNoNullLong(                                                       d
 
 
 fun Int.toNoZeroStr() = if (this == 0)  ""  else  this.toString()
-
-
-
 
 
 

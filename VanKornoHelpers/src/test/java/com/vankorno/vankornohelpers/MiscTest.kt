@@ -1,9 +1,10 @@
 package com.vankorno.vankornohelpers
 
+import com.vankorno.BaseUnitTest
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
-class LibMiscTest {
+class MiscTest : BaseUnitTest() {
     
     @Test
     fun `getTime24 returns correct zero time`() {
