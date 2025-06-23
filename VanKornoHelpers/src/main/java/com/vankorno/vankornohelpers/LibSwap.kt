@@ -16,7 +16,10 @@ fun <T> ArrayList<T>.swapWithLast(idx: Int) = swapArrayListElements(this, idx, l
 
 
 
-private fun <T> swapListElements(list: List<T>, idx1: Int, idx2: Int): List<T> {
+private fun <T> swapListElements(                                                   list: List<T>,
+                                                                                    idx1: Int,
+                                                                                    idx2: Int
+): List<T> {
     if (idx1 !in list.indices || idx2 !in list.indices) {
         // region LOG
         eLog("LibExtFun", "swap(): index $idx1 or $idx2 out of bounds for list of size ${list.size}")
@@ -28,7 +31,10 @@ private fun <T> swapListElements(list: List<T>, idx1: Int, idx2: Int): List<T> {
     return mutable
 }
 
-private fun <T> swapArrayListElements(list: ArrayList<T>, idx1: Int, idx2: Int) {
+private fun <T> swapArrayListElements(                                          list: ArrayList<T>,
+                                                                                idx1: Int,
+                                                                                idx2: Int
+) {
     if (idx1 !in list.indices || idx2 !in list.indices) {
         // region LOG
         eLog("LibExtFun", "swap(): index $idx1 or $idx2 out of bounds for list of size ${list.size}")

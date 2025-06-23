@@ -1,8 +1,6 @@
 package com.vankorno.vankornohelpers
 
 import android.util.Log
-import com.vankorno.vankornohelpers.values.LibGlobals.actExists
-import com.vankorno.vankornohelpers.values.LibGlobals.actRunning
 import com.vankorno.vankornohelpers.values.LibGlobals.debugBuild
 import com.vankorno.vankornohelpers.values.LibGlobals.eLogInUI
 import com.vankorno.vankornohelpers.values.LibGlobals.unitTestRun
@@ -42,13 +40,15 @@ fun eLog(                                                                    tag
         throwable?.printStackTrace()
     } else {
         Log.e(tag, msg, throwable)
-        if (debugBuild  &&  eLogInUI  &&  actExists  &&  actRunning) {
-            val errMsg =    if (msg.length > MaxToastLength)
-                                msg.take(MaxToastLength) + "…"
-                            else
-                                msg
-            
-            longToast("Error ($tag): $errMsg")
+        if (debugBuild  &&  eLogInUI) {
+            withUI {
+                val errMsg =    if (msg.length > MaxToastLength)
+                                    msg.take(MaxToastLength) + "…"
+                                else
+                                    msg
+                
+                longToast("Error ($tag): $errMsg")
+            }
         }
     }
 }

@@ -18,13 +18,14 @@ class LibMisc {
     
     fun makeToast(                                                               context: Context,
                                                                                      txt: String,
-                                                                                  length: Int,
-                                                                              activityON: Boolean
+                                                                                  length: Int
     ) {
-        if (!activityON  ||  txt.isBlank())  return  //\/\/\/\/\/\
+        if (txt.isBlank())  return  //\/\/\/\/\/\
         
-        Handler(Looper.getMainLooper()).post {
-            Toast.makeText(context, txt, length).show()
+        withUI {
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(context, txt, length).show()
+            }
         }
     }
     
