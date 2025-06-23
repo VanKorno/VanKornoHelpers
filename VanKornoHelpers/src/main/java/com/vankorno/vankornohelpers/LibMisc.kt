@@ -4,7 +4,10 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import com.vankorno.vankornohelpers.values.LibGlobals.actExists
+import com.vankorno.vankornohelpers.values.LibGlobals.actRunning
 import com.vankorno.vankornohelpers.values.LibGlobals.androidTestRun
+import com.vankorno.vankornohelpers.values.LibGlobals.appStarted
 
 class LibMisc {
     
@@ -35,11 +38,20 @@ class LibMisc {
     
     fun getDbName(fileName: String) = if (androidTestRun)  ":memory:"  else  fileName
     
-    
-    
-    
-    
-    
-    
-    
 }
+
+
+/**
+ * Run stuff when UI is fully operational, after the start of the app.
+ */
+inline fun withUI(                                                                   run: ()->Unit
+) {
+    if (appStarted && actExists && actRunning) {
+        run()
+    }
+}
+
+
+
+
+
