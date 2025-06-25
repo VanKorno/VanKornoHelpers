@@ -5,7 +5,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Test
 
-class SwapTest : BaseUnitTest() {
+class ReorderTest : BaseUnitTest() {
     
     @Test
     fun `List swap - valid index swaps correctly`() {
@@ -134,4 +134,42 @@ class SwapTest : BaseUnitTest() {
         list.swapWithLast(2)
         assertEquals(listOf(1, 2, 3), list)
     }
+    
+    
+    
+    @Test
+    fun `List moveToLast with last index returns original list`() {
+        val original = listOf(1, 2, 3)
+        val moved = original.moveToLast(2)
+        assertEquals(original, moved)
+    }
+    
+    @Test
+    fun `List moveToFirst moves middle element to start`() {
+        val original = listOf("a", "b", "c", "d")
+        val moved = original.moveToFirst(2)
+        assertEquals(listOf("c", "a", "b", "d"), moved)
+    }
+    
+    @Test
+    fun `ArrayList moveToLast moves first element to end in place`() {
+        val list = arrayListOf(9, 8, 7)
+        list.moveToLast(0)
+        assertEquals(listOf(8, 7, 9), list)
+    }
+    
+    @Test
+    fun `ArrayList moveToFirst with first index does nothing`() {
+        val list = arrayListOf("x", "y", "z")
+        list.moveToFirst(0)
+        assertEquals(listOf("x", "y", "z"), list)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }
