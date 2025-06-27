@@ -1,4 +1,4 @@
-package com.vankorno.vankornohelpers
+package com.vankorno.vankornohelpers.convenience
 
 private const val TAG = "LibReorder"
 
@@ -24,7 +24,10 @@ private fun <T> swapListElements(                                               
 ): List<T> {
     if (idx1 !in list.indices || idx2 !in list.indices) {
         // region LOG
-        eLog(TAG, "swap(): index $idx1 or $idx2 out of bounds for list of size ${list.size}")
+        _root_ide_package_.com.vankorno.vankornohelpers.eLog(
+            TAG,
+            "swap(): index $idx1 or $idx2 out of bounds for list of size ${list.size}"
+        )
         // endregion
         return list
     }
@@ -39,7 +42,10 @@ private fun <T> swapArrayListElements(                                          
 ) {
     if (idx1 !in list.indices || idx2 !in list.indices) {
         // region LOG
-        eLog(TAG, "swap(): index $idx1 or $idx2 out of bounds for list of size ${list.size}")
+        _root_ide_package_.com.vankorno.vankornohelpers.eLog(
+            TAG,
+            "swap(): index $idx1 or $idx2 out of bounds for list of size ${list.size}"
+        )
         // endregion
         return
     }
@@ -52,7 +58,10 @@ private fun <T> swapArrayListElements(                                          
 fun <T> List<T>.moveToFirst(idx: Int): List<T> {
     if (idx !in indices) {
         // region LOG
-        eLog(TAG, "moveToFirst(): index $idx out of bounds for list of size $size")
+        _root_ide_package_.com.vankorno.vankornohelpers.eLog(
+            TAG,
+            "moveToFirst(): index $idx out of bounds for list of size $size"
+        )
         // endregion
         return this
     }
@@ -66,7 +75,10 @@ fun <T> List<T>.moveToFirst(idx: Int): List<T> {
 fun <T> List<T>.moveToLast(idx: Int): List<T> {
     if (idx !in indices) {
         // region LOG
-        eLog(TAG, "moveToLast(): index $idx out of bounds for list of size $size")
+        _root_ide_package_.com.vankorno.vankornohelpers.eLog(
+            TAG,
+            "moveToLast(): index $idx out of bounds for list of size $size"
+        )
         // endregion
         return this
     }
@@ -81,7 +93,10 @@ fun <T> List<T>.moveToLast(idx: Int): List<T> {
 fun <T> ArrayList<T>.moveToFirst(idx: Int) {
     if (idx !in indices) {
         // region LOG
-        eLog(TAG, "moveToFirst(): index $idx out of bounds for list of size $size")
+        _root_ide_package_.com.vankorno.vankornohelpers.eLog(
+            TAG,
+            "moveToFirst(): index $idx out of bounds for list of size ${_root_ide_package_.java.util.ArrayList.size}"
+        )
         // endregion
         return
     }
@@ -93,7 +108,10 @@ fun <T> ArrayList<T>.moveToFirst(idx: Int) {
 fun <T> ArrayList<T>.moveToLast(idx: Int) {
     if (idx !in indices) {
         // region LOG
-        eLog(TAG, "moveToLast(): index $idx out of bounds for list of size $size")
+        _root_ide_package_.com.vankorno.vankornohelpers.eLog(
+            TAG,
+            "moveToLast(): index $idx out of bounds for list of size ${_root_ide_package_.java.util.ArrayList.size}"
+        )
         // endregion
         return
     }

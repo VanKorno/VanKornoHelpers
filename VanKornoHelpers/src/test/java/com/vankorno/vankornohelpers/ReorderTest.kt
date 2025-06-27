@@ -1,6 +1,12 @@
 package com.vankorno.vankornohelpers
 
 import com.vankorno.BaseUnitTest
+import com.vankorno.vankornohelpers.convenience.moveToFirst
+import com.vankorno.vankornohelpers.convenience.moveToLast
+import com.vankorno.vankornohelpers.convenience.swapWithFirst
+import com.vankorno.vankornohelpers.convenience.swapWithLast
+import com.vankorno.vankornohelpers.convenience.swapWithNext
+import com.vankorno.vankornohelpers.convenience.swapWithPrev
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Test

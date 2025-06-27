@@ -3,32 +3,6 @@ package com.vankorno.vankornohelpers
 import java.security.SecureRandom
 import java.util.Locale
 
-fun IntRange.libRandom(): Int {
-    val min = this.first
-    val max = this.last - min
-    return min + SecureRandom().nextInt(max + 1)
-}
-
-
-fun Int.nextOrFirst(                                                  range: IntRange = 0..1
-) = if (this >= range.first  &&  this < range.last)
-        this + 1
-    else
-        range.first
-
-inline fun <reified T : Enum<T>> T.nextOrFirst(): T {
-    val values = enumValues<T>()
-    val nextOrdinal = (this.ordinal + 1) % values.size
-    return values[nextOrdinal]
-}
-
-fun <T> List<T>.nextOrFirst(currentIndex: Int): T = this[(currentIndex + 1) % this.size]
-
-
-fun Boolean.toByte(): Byte = if (this) 1 else 0
-fun Boolean.toInt(): Int = if (this) 1 else 0
-
-
 
 // =============================  FORMATTING  ==============================
 
