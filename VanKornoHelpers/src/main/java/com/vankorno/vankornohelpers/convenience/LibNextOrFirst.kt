@@ -15,5 +15,3 @@ inline fun <reified T : Enum<T>> T.nextOrFirst(): T {
 fun <T> List<T>.nextOrFirst(currentIndex: Int): T = this[(currentIndex + 1) % this.size]
 
 
-fun Boolean.toByte(): Byte = if (this) 1 else 0
-fun Boolean.toInt(): Int = if (this) 1 else 0

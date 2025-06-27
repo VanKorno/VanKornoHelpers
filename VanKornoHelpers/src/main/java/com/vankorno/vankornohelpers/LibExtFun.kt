@@ -1,8 +1,9 @@
 package com.vankorno.vankornohelpers
 
-import java.security.SecureRandom
 import java.util.Locale
 
+fun Boolean.toByte(): Byte = if (this) 1 else 0
+fun Boolean.toInt(): Int = if (this) 1 else 0
 
 // =============================  FORMATTING  ==============================
 
