@@ -20,7 +20,7 @@ fun Locale.toLangAndCountry() = this.displayName
                                     .toPolitCorrect()
 
 
-fun String.toPolitCorrect() = this.replace(Regex("russia\\b", RegexOption.IGNORE_CASE), "moskovia")
+fun String.toPolitCorrect() = this.replace(Regex("russia\\b", RegexOption.IGNORE_CASE), "terrorist state")
 
 
 fun Int.secToMinSec() = String.format(Locale.getDefault(), "%d:%02d", this / 60, this % 60)
