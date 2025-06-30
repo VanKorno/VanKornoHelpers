@@ -10,6 +10,16 @@ fun Boolean.toInt(): Int = if (this) 1 else 0
 fun String.normalizeNewlines() = this.replace("\r\n", "\n").replace("\r", "\n")
 
 
+fun Locale.toLangAndCountry() = this.displayName
+                                    .replaceFirstChar {
+                                        if (it.isLowerCase())
+                                            it.titlecase(Locale.ROOT)
+                                        else
+                                            it.toString()
+                                    }
+                                    .toPolitCorrect()
+
+
 fun String.toPolitCorrect() = this.replace(Regex("russia\\b", RegexOption.IGNORE_CASE), "moskovia")
 
 
