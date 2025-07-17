@@ -43,4 +43,29 @@ object LibGlobals {
     @Volatile
     var simulatedTime = 0L
     
+    
+    fun reset() {
+        actRunning = false
+        actExists = false
+        appStarted = false
+        actPaused = false
+        updatingScreenNow = false
+    
+        screenDensity = 0.0f
+        language = LangAuto
+    
+        androidTestRun = false
+        unitTestRun = false
+        debugBuild = false
+    
+        eLogInUI = false
+    
+        intForUnitTests = 0
+        strForUnitTests = ""
+    
+        intForAndroidTests = 0
+        strForAndroidTests = ""
+    
+        simulatedTime = 0L
+    }
 }
