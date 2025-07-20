@@ -8,10 +8,6 @@ LangAuto="auto",        ENG="en",       UKR="uk"
 
 
 
-    public static final int
-        iOFF = -1
-;
-
 
 
 
