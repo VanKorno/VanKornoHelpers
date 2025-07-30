@@ -9,21 +9,23 @@ import java.io.File
 import java.io.FileOutputStream
 
 private const val TAG = "LibPic"
-private const val PicPrefix = "pic"
-const val PicInternalFolder = "user_pics"
 
-class LibPic(                                                        private val context: Context
+class LibPic(             private val context: Context,
+                          private val nameGen: ()->String = { "pic_${System.currentTimeMillis()}" },
+                    private val picFolderName: String = "user_pics"
 ) {
-    private val imagesDir = File(context.filesDir, PicInternalFolder).apply { mkdirs() }
+    private val imagesDir = File(context.filesDir, picFolderName).apply { mkdirs() }
     
     
-    fun saveImageFromUri(                                                   uri: Uri,
-                                                                     namePrefix: String = PicPrefix
+    fun getAbsolutePath(path: String): String = getFile(path).absolutePath
+    
+    
+    fun saveImageFromUri(                                                            uri: Uri
     ): String {
         // region LOG
             dLog(TAG, "saveImageFromUri()")
         // endregion
-        val filename = "${namePrefix}_${System.currentTimeMillis()}.png"
+        val filename = "${nameGen()}.png"
         val outFile = File(imagesDir, filename)
         
         context.contentResolver.openInputStream(uri)?.use { input ->
@@ -31,7 +33,7 @@ class LibPic(                                                        private val
                 input.copyTo(output)
             }
         }
-        return "$PicInternalFolder/$filename" // Return relative path for DB
+        return "$picFolderName/$filename" // Return relative path for DB
     }
     
     
@@ -103,7 +105,6 @@ class LibPic(                                                        private val
     
     
     fun saveBitmapAsNewFile(              bitmap: Bitmap,
-                                      namePrefix: String = PicPrefix,
                                           format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
                                          quality: Int = 100
     ): String {
@@ -116,11 +117,11 @@ class LibPic(                                                        private val
             Bitmap.CompressFormat.WEBP -> "webp"
             else -> "img"
         }
-        val filename = "${namePrefix}_${System.currentTimeMillis()}.$extension"
+        val filename = "${nameGen()}.$extension"
             
         saveBitmapAt(filename, bitmap, format, quality)
             
-        return "$PicInternalFolder/$filename"
+        return "$picFolderName/$filename"
     }
     
     
