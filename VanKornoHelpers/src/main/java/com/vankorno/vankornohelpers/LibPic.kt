@@ -113,7 +113,7 @@ class LibPic(             private val context: Context,
     }
     
     
-    fun getBitmapFromPath(path: String) = BitmapFactory.decodeFile(getFile(path).absolutePath)
+    fun getBitmapFromPath(path: String): Bitmap? = BitmapFactory.decodeFile(getFile(path).absolutePath)
     
     
     fun saveBitmapAsNewFile(              bitmap: Bitmap,
