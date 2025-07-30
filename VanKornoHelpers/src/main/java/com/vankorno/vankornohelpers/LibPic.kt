@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.webkit.MimeTypeMap
+import androidx.core.graphics.scale
 import androidx.core.net.toUri
 import java.io.File
 import java.io.FileOutputStream
@@ -20,12 +22,17 @@ class LibPic(             private val context: Context,
     fun getAbsolutePath(path: String): String = getFile(path).absolutePath
     
     
-    fun saveImageFromUri(                                                            uri: Uri
+    fun getMimeType(path: String): String? =
+        MimeTypeMap.getSingleton().getMimeTypeFromExtension(File(path).extension)
+    
+    
+    fun saveImageFromUri(                                                      uri: Uri,
+                                                                         extension: String = "png"
     ): String {
         // region LOG
             dLog(TAG, "saveImageFromUri()")
         // endregion
-        val filename = "${nameGen()}.png"
+        val filename = "${nameGen()}.$extension"
         val outFile = File(imagesDir, filename)
         
         context.contentResolver.openInputStream(uri)?.use { input ->
@@ -153,6 +160,79 @@ class LibPic(             private val context: Context,
             false
         }
     }
+    
+    
+    fun resizeImageToFitScreen(             path: String,
+                                          format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
+                                         quality: Int = 100
+    ) = resizeImageToScreenFraction(path, 1f, format, quality)
+    
+    
+    
+    /** fraction: 1 = 100% */
+    fun resizeImageToScreenFraction(        path: String,
+                                        fraction: Float,
+                                          format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
+                                         quality: Int = 100
+    ): Boolean {
+        val screen = getRealScreenSizePx(context)
+        val maxW = (screen.w * fraction).toInt()
+        val maxH = (screen.h * fraction).toInt()
+        
+        return resizeImagePreserveAspect(
+            path = path,
+            maxWidth = maxW,
+            maxHeight = maxH,
+            format = format,
+            quality = quality
+        )
+    }
+    
+    
+    fun resizeImagePreserveAspect(          path: String,
+                                        maxWidth: Int,
+                                       maxHeight: Int,
+                                          format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
+                                         quality: Int = 100
+    ): Boolean {
+        // region LOG
+            dLog(TAG, "resizeImagePreserveAspect(path = $path, maxW = $maxWidth, maxH = $maxHeight, format = ${format.name}, quality = $quality)")
+        // endregion
+        val original = getBitmapFromPath(path) ?: return false
+        
+        val width = original.width
+        val height = original.height
+        
+        if (width <= maxWidth && height <= maxHeight) return true //\/\/\/\/\
+        
+        val ratio = minOf(maxWidth / width.toFloat(), maxHeight / height.toFloat())
+        val newW = (width * ratio).toInt()
+        val newH = (height * ratio).toInt()
+        
+        val resized = original.scale(newW, newH)
+        
+        return saveBitmapAt(path, resized, format, quality)
+    }
+    
+    
+    fun renameImage(                                                             oldPath: String,
+                                                                                 newName: String
+    ): String? {
+        // region LOG
+            dLog(TAG, "renameImage(oldPath = $oldPath, newName = $newName)")
+        // endregion
+        if (oldPath.isBlank() || newName.isBlank()) return null //\/\/\
+        
+        val oldFile = getFile(oldPath)
+        if (!oldFile.exists()) return null //\/\/\
+        
+        val extension = oldFile.extension.ifBlank { "img" }
+        val newFile = File(imagesDir, "$newName.$extension")
+        
+        return if (oldFile.renameTo(newFile)) { "$picFolderName/${newFile.name}" } else null //\/\/\
+    }
+    
+    
     
     
 }
