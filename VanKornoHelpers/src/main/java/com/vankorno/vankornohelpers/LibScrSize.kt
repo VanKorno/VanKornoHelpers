@@ -25,6 +25,7 @@ fun getRealScreenSizePx(                                                        
     } else {
         val displayMetrics = DisplayMetrics()
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        
         @Suppress("DEPRECATION")
         wm.defaultDisplay.getRealMetrics(displayMetrics)
         SizeWH(displayMetrics.widthPixels, displayMetrics.heightPixels)
@@ -45,9 +46,11 @@ fun getUsableScreenSizePx(                                                      
         val width = bounds.width() - insets.left - insets.right
         val height = bounds.height() - insets.top - insets.bottom
         SizeWH(width, height)
-    } else {
+    }
+    else {
         val displayMetrics = DisplayMetrics()
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        
         @Suppress("DEPRECATION")
         wm.defaultDisplay.getMetrics(displayMetrics)
         SizeWH(displayMetrics.widthPixels, displayMetrics.heightPixels)

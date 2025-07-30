@@ -50,8 +50,12 @@ class LibPic(             private val context: Context,
         // region LOG
             dLog(TAG, "deleteImage(path = $path)")
         // endregion
-        if (path.isBlank()) return false //\/\/\/\/\/\
-        
+        if (path.isBlank()) {
+            // region LOG
+                eLog(TAG, "deleteImage(): path is blank. Returning...")
+            // endregion
+            return false //\/\/\/\/\/\ 
+        }
         val file = getFileInAppStorage(context, path)
         return file.exists() && file.delete()
     }
@@ -69,11 +73,16 @@ class LibPic(             private val context: Context,
     
     
     fun getImageSize(                                                               path: String
-    ): Pair<Int, Int>? {
+    ): SizeWH? {
         return try {
             val opts = BitmapFactory.Options().apply { inJustDecodeBounds = true }
             BitmapFactory.decodeFile(getFileInAppStorage(context, path).absolutePath, opts)
-            opts.outWidth to opts.outHeight
+            val w = opts.outWidth
+            val h = opts.outHeight
+            // region LOG
+                eLog(TAG, "getImageSize() returns w = $w, h = $h")
+            // endregion
+            SizeWH(w = w, h = h)
         } catch (e: Exception) {
             // region LOG
                 eLog(TAG, "getImageSize() failed!", e)
@@ -96,6 +105,9 @@ class LibPic(             private val context: Context,
                     input.copyTo(output)
                 }
             }
+            // region LOG
+                dLog(TAG, "updateImageFromUri(): Updated successfully!")
+            // endregion
             true
         } catch (e: Exception) {
             // region LOG
@@ -139,7 +151,7 @@ class LibPic(             private val context: Context,
                                          quality: Int = 100
     ): Boolean {
         // region LOG
-            dLog(TAG, "saveBitmapAsNewFile(path = $path, format = ${format.name}, quality = $quality)")
+            dLog(TAG, "saveBitmapAt(path = $path, format = ${format.name}, quality = $quality)")
         // endregion
         if (path.isBlank()) {
             // region LOG
@@ -157,6 +169,9 @@ class LibPic(             private val context: Context,
             FileOutputStream(file).use { out ->
                 bitmap.compress(format, quality, out)
             }
+            // region LOG
+                dLog(TAG, "saveBitmapAt(): Saved successfully!")
+            // endregion
             true
         } catch (e: Exception) {
             // region LOG
@@ -180,6 +195,9 @@ class LibPic(             private val context: Context,
                                           format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
                                          quality: Int = 100
     ): Boolean {
+        // region LOG
+            dLog(TAG, "resizeImageToScreenFraction(path = $path, fraction = $fraction, format = ${format.name}, quality = $quality)")
+        // endregion
         val safeFraction = fraction.coerceIn(0.1f, 1f)
         val screen = getRealScreenSizePx(context)
         val maxW = (screen.w * safeFraction).toInt()
@@ -227,15 +245,39 @@ class LibPic(             private val context: Context,
         // region LOG
             dLog(TAG, "renameImage(oldPath = $oldPath, newName = $newName)")
         // endregion
-        if (oldPath.isBlank() || newName.isBlank()) return null //\/\/\
-        
+        if (oldPath.isBlank()) {
+            // region LOG
+                eLog(TAG, "renameImage(): oldPath is blank. Returning null...")
+            // endregion
+            return null //\/\/\/\/\/\
+        } else if (newName.isBlank()) {
+            // region LOG
+                eLog(TAG, "renameImage(): newName is blank. Returning null...")
+            // endregion
+            return null //\/\/\/\/\/\
+        }
         val oldFile = getFileInAppStorage(context, oldPath)
-        if (!oldFile.exists()) return null //\/\/\
-        
+        if (!oldFile.exists()) {
+            // region LOG
+                eLog(TAG, "renameImage(): The old file doesn't exist! Returning null...")
+            // endregion
+            return null //\/\/\/\/\/\
+        }
         val extension = oldFile.extension.ifBlank { "img" }
         val newFile = File(imagesDir, "$newName.$extension")
         
-        return if (oldFile.renameTo(newFile)) { "$picFolderName/${newFile.name}" } else null //\/\/\
+        return if (oldFile.renameTo(newFile)) {
+            val newPath = "$picFolderName/${newFile.name}"
+            // region LOG
+                dLog(TAG, "renameImage(): Successfully renamed the file $newPath")
+            // endregion
+            newPath
+        } else {
+            // region LOG
+                eLog(TAG, "renameImage(): Renaming failed. Returning null...")
+            // endregion
+            null
+        }
     }
     
     
