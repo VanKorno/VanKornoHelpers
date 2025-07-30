@@ -82,6 +82,9 @@ class LibPic(             private val context: Context,
             BitmapFactory.decodeFile(getFile(path).absolutePath, opts)
             opts.outWidth to opts.outHeight
         } catch (e: Exception) {
+            // region LOG
+                eLog(TAG, "getImageSize() failed!", e)
+            // endregion
             null
         }
     }
@@ -102,7 +105,9 @@ class LibPic(             private val context: Context,
             }
             true
         } catch (e: Exception) {
-            eLog(TAG, "updateImageFromUri(): Update failed!", e)
+            // region LOG
+                eLog(TAG, "updateImageFromUri(): Update failed!", e)
+            // endregion
             false
         }
     }
