@@ -4,9 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.webkit.MimeTypeMap
 import androidx.core.graphics.scale
-import androidx.core.net.toUri
 import java.io.File
 import java.io.FileOutputStream
 
@@ -16,14 +14,10 @@ class LibPic(             private val context: Context,
                           private val nameGen: ()->String = { "pic_${System.currentTimeMillis()}" },
                     private val picFolderName: String = "user_pics"
 ) {
-    private val imagesDir = File(context.filesDir, picFolderName).apply { mkdirs() }
+    val imagesDir = File(context.filesDir, picFolderName).apply { mkdirs() }
     
     
-    fun getAbsolutePath(path: String): String = getFile(path).absolutePath
-    
-    
-    fun getMimeType(path: String): String? =
-        MimeTypeMap.getSingleton().getMimeTypeFromExtension(File(path).extension)
+    fun getAbsolutePath(path: String): String = getFileInAppStorage(context, path).absolutePath
     
     
     fun saveImageFromUri(                                                      uri: Uri,
@@ -32,15 +26,22 @@ class LibPic(             private val context: Context,
         // region LOG
             dLog(TAG, "saveImageFromUri()")
         // endregion
-        val filename = "${nameGen()}.$extension"
+        val filename = generateUniqueFilename(extension)
         val outFile = File(imagesDir, filename)
         
-        context.contentResolver.openInputStream(uri)?.use { input ->
+        val inputStream = context.contentResolver.openInputStream(uri)
+        if (inputStream == null) {
+            // region LOG
+            eLog(TAG, "saveImageFromUri(): Unable to open input stream for $uri. Returning empty string.")
+            // endregion
+            return ""
+        }
+        inputStream.use { input ->
             FileOutputStream(outFile).use { output ->
                 input.copyTo(output)
             }
         }
-        return "$picFolderName/$filename" // Return relative path for DB
+        return "$picFolderName/$filename"
     }
     
     
@@ -51,14 +52,9 @@ class LibPic(             private val context: Context,
         // endregion
         if (path.isBlank()) return false //\/\/\/\/\/\
         
-        val file = File(context.filesDir, path)
+        val file = getFileInAppStorage(context, path)
         return file.exists() && file.delete()
     }
-    
-    
-    fun getFile(path: String): File = File(context.filesDir, path)
-    
-    fun getUri(path: String): Uri = getFile(path).toUri()
     
     
     fun listImageFiles(): List<File> = imagesDir.listFiles()?.toList().orEmpty()
@@ -72,14 +68,11 @@ class LibPic(             private val context: Context,
     }
     
     
-    fun exists(path: String): Boolean = getFile(path).exists()
-    
-    
     fun getImageSize(                                                               path: String
     ): Pair<Int, Int>? {
         return try {
             val opts = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-            BitmapFactory.decodeFile(getFile(path).absolutePath, opts)
+            BitmapFactory.decodeFile(getFileInAppStorage(context, path).absolutePath, opts)
             opts.outWidth to opts.outHeight
         } catch (e: Exception) {
             // region LOG
@@ -113,7 +106,10 @@ class LibPic(             private val context: Context,
     }
     
     
-    fun getBitmapFromPath(path: String): Bitmap? = BitmapFactory.decodeFile(getFile(path).absolutePath)
+    fun getBitmapFromPath(                                                          path: String
+    ): Bitmap? = BitmapFactory.decodeFile(
+        getFileInAppStorage(context, path).absolutePath
+    )
     
     
     fun saveBitmapAsNewFile(              bitmap: Bitmap,
@@ -129,10 +125,10 @@ class LibPic(             private val context: Context,
             Bitmap.CompressFormat.WEBP -> "webp"
             else -> "img"
         }
-        val filename = "${nameGen()}.$extension"
-            
+        val filename = generateUniqueFilename(extension)
+        
         saveBitmapAt(filename, bitmap, format, quality)
-            
+        
         return "$picFolderName/$filename"
     }
     
@@ -151,9 +147,13 @@ class LibPic(             private val context: Context,
             // endregion
             return false //\/\/\/\/\/\
         }
-        
         return try {
-            val file = getFile(path)
+            val file = getFileInAppStorage(context, path)
+            
+            file.parentFile?.mkdirs() /*This ensures that
+                if someone ever passes a path with subdirectories (e.g., "subfolder/my_image.png"),
+                it won’t crash with FileNotFoundException.*/
+            
             FileOutputStream(file).use { out ->
                 bitmap.compress(format, quality, out)
             }
@@ -180,9 +180,10 @@ class LibPic(             private val context: Context,
                                           format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
                                          quality: Int = 100
     ): Boolean {
+        val safeFraction = fraction.coerceIn(0.1f, 1f)
         val screen = getRealScreenSizePx(context)
-        val maxW = (screen.w * fraction).toInt()
-        val maxH = (screen.h * fraction).toInt()
+        val maxW = (screen.w * safeFraction).toInt()
+        val maxH = (screen.h * safeFraction).toInt()
         
         return resizeImagePreserveAspect(
             path = path,
@@ -228,7 +229,7 @@ class LibPic(             private val context: Context,
         // endregion
         if (oldPath.isBlank() || newName.isBlank()) return null //\/\/\
         
-        val oldFile = getFile(oldPath)
+        val oldFile = getFileInAppStorage(context, oldPath)
         if (!oldFile.exists()) return null //\/\/\
         
         val extension = oldFile.extension.ifBlank { "img" }
@@ -238,6 +239,18 @@ class LibPic(             private val context: Context,
     }
     
     
+    private fun generateUniqueFilename(                                        extension: String
+    ): String {
+        val base = nameGen()
+        var filename = "$base.$extension"
+        var counter = 1
+        
+        while (File(imagesDir, filename).exists()) {
+            filename = "${base}_$counter.$extension"
+            counter++
+        }
+        return filename
+    }
     
     
 }
