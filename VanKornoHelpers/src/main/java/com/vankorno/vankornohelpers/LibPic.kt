@@ -182,27 +182,27 @@ class LibPic(             private val context: Context,
     }
     
     
-    fun resizeImageToFitScreen(             path: String,
+    
+    /** fraction: 1f = 100% */
+    fun resizePicToScr(                     path: String,
+                                        fraction: Float = 1f,
+                                         quality: Int = 100,
                                           format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
-                                         quality: Int = 100
-    ) = resizeImageToScreenFraction(path, 1f, format, quality)
-    
-    
-    
-    /** fraction: 1 = 100% */
-    fun resizeImageToScreenFraction(        path: String,
-                                        fraction: Float,
-                                          format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
-                                         quality: Int = 100
+                                 longestSideOnly: Boolean = true
     ): Boolean {
         // region LOG
-            dLog(TAG, "resizeImageToScreenFraction(path = $path, fraction = $fraction, format = ${format.name}, quality = $quality)")
+            dLog(TAG, "resizePicToScr(path = $path, fraction = $fraction, quality = $quality, format = ${format.name}, byLongestSideOnly = $longestSideOnly)")
         // endregion
         val safeFraction = fraction.coerceIn(0.1f, 1f)
         val screen = getRealScreenSizePx(context)
-        val maxW = (screen.w * safeFraction).toInt()
-        val maxH = (screen.h * safeFraction).toInt()
+        var maxW = (screen.w * safeFraction).toInt()
+        var maxH = (screen.h * safeFraction).toInt()
         
+        if (longestSideOnly) {
+            val longest = maxOf(maxW, maxH)
+            maxW = longest
+            maxH = longest
+        }
         return resizeImagePreserveAspect(
             path = path,
             maxWidth = maxW,
@@ -212,7 +212,9 @@ class LibPic(             private val context: Context,
         )
     }
     
-    
+    /**
+     * Returns true if resized successfully or already small enough.
+     */
     fun resizeImagePreserveAspect(          path: String,
                                         maxWidth: Int,
                                        maxHeight: Int,
@@ -223,16 +225,18 @@ class LibPic(             private val context: Context,
             dLog(TAG, "resizeImagePreserveAspect(path = $path, maxW = $maxWidth, maxH = $maxHeight, format = ${format.name}, quality = $quality)")
         // endregion
         val original = getBitmapFromPath(path) ?: return false
-        
         val width = original.width
         val height = original.height
         
-        if (width <= maxWidth && height <= maxHeight) return true //\/\/\/\/\
-        
+        if (width <= maxWidth && height <= maxHeight) {
+            // region LOG
+                dLog(TAG, "resizeImagePreserveAspect(): The image is already small enough. Resizing isn't needed.")
+            // endregion
+            return true //\/\/\/\/\ 
+        }
         val ratio = minOf(maxWidth / width.toFloat(), maxHeight / height.toFloat())
         val newW = (width * ratio).toInt()
         val newH = (height * ratio).toInt()
-        
         val resized = original.scale(newW, newH)
         
         return saveBitmapAt(path, resized, format, quality)
