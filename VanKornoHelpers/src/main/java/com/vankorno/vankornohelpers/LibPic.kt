@@ -138,10 +138,9 @@ class LibPic(             private val context: Context,
             else -> "img"
         }
         val filename = generateUniqueFilename(extension)
-        
-        saveBitmapAt(filename, bitmap, format, quality)
-        
-        return "$picFolderName/$filename"
+        val relativePath = "$picFolderName/$filename"
+        saveBitmapAt(relativePath, bitmap, format, quality)
+        return relativePath
     }
     
     
