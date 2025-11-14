@@ -21,7 +21,7 @@ class LibPic(             private val context: Context,
     
     
     fun saveImageFromUri(                                                      uri: Uri,
-                                                                         extension: String = "png"
+                                                                         extension: String = "png",
     ): String {
         // region LOG
             dLog(TAG, "saveImageFromUri()")
@@ -93,7 +93,7 @@ class LibPic(             private val context: Context,
     
     
     fun updateImageFromUri(                                                          uri: Uri,
-                                                                                filename: String
+                                                                                filename: String,
     ): Boolean {
         // region LOG
             dLog(TAG, "updateImageFromUri(filename = $filename)")
@@ -147,7 +147,7 @@ class LibPic(             private val context: Context,
     fun saveBitmapAt(                       path: String,
                                           bitmap: Bitmap,
                                           format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
-                                         quality: Int = 100
+                                         quality: Int = 100,
     ): Boolean {
         // region LOG
             dLog(TAG, "saveBitmapAt(path = $path, format = ${format.name}, quality = $quality)")
@@ -191,7 +191,7 @@ class LibPic(             private val context: Context,
                                         fraction: Float = 1f,
                                          quality: Int = 100,
                                           format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
-                                 longestSideOnly: Boolean = true
+                                 longestSideOnly: Boolean = true,
     ): Boolean {
         // region LOG
             dLog(TAG, "resizePicToScr(path = $path, fraction = $fraction, quality = $quality, format = ${format.name}, byLongestSideOnly = $longestSideOnly)")
@@ -203,7 +203,7 @@ class LibPic(             private val context: Context,
     
     fun resizeBitmapToScr(                                                original: Bitmap,
                                                                           fraction: Float = 1f,
-                                                                   longestSideOnly: Boolean = true
+                                                                   longestSideOnly: Boolean = true,
     ): Bitmap {
         // region LOG
             dLog(TAG, "resizeBitmapToScr(fraction = $fraction, longestSideOnly = $longestSideOnly)")
@@ -215,7 +215,7 @@ class LibPic(             private val context: Context,
     
     
     private fun getMaxWHToFitScr(                                               fraction: Float,
-                                                                         longestSideOnly: Boolean
+                                                                         longestSideOnly: Boolean,
     ): Pair<Int, Int> {
         val safeFraction = fraction.coerceIn(0.1f, 1f)
         val screen = getRealScreenSizePx(context)
@@ -238,7 +238,7 @@ class LibPic(             private val context: Context,
                                         maxWidth: Int,
                                        maxHeight: Int,
                                           format: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
-                                         quality: Int = 100
+                                         quality: Int = 100,
     ): Boolean {
         // region LOG
             dLog(TAG, "resizeImagePreserveAspect(path = $path, maxW = $maxWidth, maxH = $maxHeight, format = ${format.name}, quality = $quality)")
@@ -252,7 +252,7 @@ class LibPic(             private val context: Context,
     
     private fun resizeBitmapPreserveAspect(                                     original: Bitmap,
                                                                                 maxWidth: Int,
-                                                                               maxHeight: Int
+                                                                               maxHeight: Int,
     ): ResizeBitmapResult {
         val width = original.width
         val height = original.height
@@ -279,7 +279,7 @@ class LibPic(             private val context: Context,
     // ------------------------------------  N A M I N G  ------------------------------------ \\
     
     fun renameImage(                                                             oldPath: String,
-                                                                                 newName: String
+                                                                                 newName: String,
     ): String? {
         // region LOG
             dLog(TAG, "renameImage(oldPath = $oldPath, newName = $newName)")

@@ -4,8 +4,8 @@ import android.content.Context
 import android.media.SoundPool
 import android.util.Log
 
-class LibSoundPool(                                        context: Context,
-                                                              sounds: Array<Int> = emptyArray<Int>()
+class LibSoundPool(                                         context: Context,
+                                                             sounds: Array<Int> = emptyArray<Int>(),
 ) {
     private val soundPool: SoundPool = SoundPool.Builder()
         .setMaxStreams(10)
@@ -15,14 +15,14 @@ class LibSoundPool(                                        context: Context,
     
     
     init { // Preload sounds into the SoundPool
-        sounds.forEach { sound ->
+        for (sound in sounds) {
             soundMap[sound] = soundPool.load(context, sound, 1)
         }
     }
     
     
     fun playSound(                                                                 sound: Int,
-                                                                                 context: Context
+                                                                                 context: Context,
     ) {
         val soundId = soundMap[sound]
         

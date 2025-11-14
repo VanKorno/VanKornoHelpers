@@ -9,17 +9,17 @@ class LibClipBoard {
     
     fun getTxt(                                                                  cont: Context
     ): String {
-        val clipbrd = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val item = clipbrd.primaryClip?.getItemAt(0) ?: return ""
+        val clipboard = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val item = clipboard.primaryClip?.getItemAt(0) ?: return ""
         return item.text.toString()
     }
     
     
     fun setTxt(                                                                  cont: Context,
-                                                                                  txt: String
+                                                                                  txt: String,
     ) {
-        val clipbrd = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipbrd.setPrimaryClip(ClipData.newPlainText("simple text", txt))
+        val clipboard = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.setPrimaryClip(ClipData.newPlainText("simple text", txt))
     }
     
     

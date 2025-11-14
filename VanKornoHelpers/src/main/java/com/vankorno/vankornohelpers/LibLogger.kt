@@ -9,7 +9,7 @@ import com.vankorno.vankornohelpers.values.longToast
 private const val MaxToastLength = 200
 
 fun dLog(                                                                            tag: String,
-                                                                                     msg: String
+                                                                                     msg: String,
 ) {
     if (!debugBuild)  return  //\/\/\/\/\/\
     
@@ -20,7 +20,7 @@ fun dLog(                                                                       
 }
 
 fun wLog(                                                                            tag: String,
-                                                                                     msg: String
+                                                                                     msg: String,
 ) {
     if (!debugBuild)  return  //\/\/\/\/\/\
     
@@ -33,7 +33,7 @@ fun wLog(                                                                       
 
 fun eLog(                                                                    tag: String,
                                                                              msg: String,
-                                                                       throwable: Throwable? = null
+                                                                       throwable: Throwable? = null,
 ) {
     if (unitTestRun) {
         println("ERROR! ($tag): $msg")

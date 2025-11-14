@@ -7,7 +7,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-private const val TAG = "TimeProvider"
+//private const val TAG = "TimeProvider"
 
 
 fun getCurrTime() = if (androidTestRun) {

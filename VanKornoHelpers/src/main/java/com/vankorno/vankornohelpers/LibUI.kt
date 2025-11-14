@@ -6,7 +6,7 @@ import android.graphics.drawable.ColorDrawable
 class LibUI {
     
     fun setWindowBackgroundColor(                                        activity: Activity,
-                                                                            color: Int = -0xe4e4e5
+                                                                            color: Int = -0xe4e4e5,
     ) {
         val myDrawable = ColorDrawable(color)
         activity.window.setBackgroundDrawable(myDrawable)

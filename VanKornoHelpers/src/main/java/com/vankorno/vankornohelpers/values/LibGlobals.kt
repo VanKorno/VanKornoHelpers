@@ -1,47 +1,41 @@
 package com.vankorno.vankornohelpers.values
 
 import com.vankorno.vankornohelpers.values.LibConstants.LangAuto
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 object LibGlobals {
-    @Volatile
-    var actRunning = false
-    @Volatile
-    var actExists = false
-    @Volatile
-    var appStarted = false
-    @Volatile
-    var actPaused = false
+    @Volatile var actRunning = false
+    @Volatile var actExists = false
+    @Volatile var appStarted = false
+    @Volatile var actPaused = false
     
-    @Volatile
-    var updatingScreenNow = false
+    @Volatile var updatingScreenNow = false
     
     var screenDensity = 0.0f
     
-    var language = LangAuto
+    @Volatile var androidTestRun = false
+    @Volatile var unitTestRun = false
+    @Volatile var debugBuild = false
+    
+    @Volatile var eLogInUI = false
+    
+    @Volatile var intForUnitTests = 0
+    @Volatile var strForUnitTests = ""
+    
+    @Volatile var intForAndroidTests = 0
+    @Volatile var strForAndroidTests = ""
+    
+    @Volatile var simulatedTime = 0L
     
     
-    @Volatile
-    var androidTestRun = false
-    @Volatile
-    var unitTestRun = false
-    @Volatile
-    var debugBuild = false
+    private val _language = MutableStateFlow(LangAuto)
+    val langFlow: StateFlow<String> = _language
     
-    @Volatile
-    var eLogInUI = false
+    var language: String
+        get() = _language.value
+        set(new) { _language.value = new }
     
-    @Volatile
-    var intForUnitTests = 0
-    @Volatile
-    var strForUnitTests = ""
-    
-    @Volatile
-    var intForAndroidTests = 0
-    @Volatile
-    var strForAndroidTests = ""
-    
-    @Volatile
-    var simulatedTime = 0L
     
     
     fun reset() {
@@ -67,5 +61,7 @@ object LibGlobals {
         strForAndroidTests = ""
     
         simulatedTime = 0L
+        
+        _language.value = LangAuto
     }
 }

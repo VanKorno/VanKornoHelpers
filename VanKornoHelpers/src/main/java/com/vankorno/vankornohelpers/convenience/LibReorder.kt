@@ -22,7 +22,7 @@ fun <T> ArrayList<T>.swapWithLast(idx: Int) = swapArrayListElements(this, idx, l
 
 private fun <T> swapListElements(                                                   list: List<T>,
                                                                                     idx1: Int,
-                                                                                    idx2: Int
+                                                                                    idx2: Int,
 ): List<T> {
     if (idx1 !in list.indices || idx2 !in list.indices) {
         // region LOG
@@ -37,7 +37,7 @@ private fun <T> swapListElements(                                               
 
 private fun <T> swapArrayListElements(                                          list: ArrayList<T>,
                                                                                 idx1: Int,
-                                                                                idx2: Int
+                                                                                idx2: Int,
 ) {
     if (idx1 !in list.indices || idx2 !in list.indices) {
         // region LOG
@@ -51,7 +51,8 @@ private fun <T> swapArrayListElements(                                          
 
 
 
-fun <T> List<T>.moveToFirst(idx: Int): List<T> {
+fun <T> List<T>.moveToFirst(                                                         idx: Int
+): List<T> {
     if (idx !in indices) {
         // region LOG
             eLog(TAG, "moveToFirst(): index $idx out of bounds for list of size $size")
@@ -65,7 +66,8 @@ fun <T> List<T>.moveToFirst(idx: Int): List<T> {
     return mutable
 }
 
-fun <T> List<T>.moveToLast(idx: Int): List<T> {
+fun <T> List<T>.moveToLast(                                                          idx: Int
+): List<T> {
     if (idx !in indices) {
         // region LOG
             eLog(TAG, "moveToLast(): index $idx out of bounds for list of size $size")
@@ -80,7 +82,8 @@ fun <T> List<T>.moveToLast(idx: Int): List<T> {
 }
 
 
-fun <T> ArrayList<T>.moveToFirst(idx: Int) {
+fun <T> ArrayList<T>.moveToFirst(                                                    idx: Int
+) {
     if (idx !in indices) {
         // region LOG
             eLog(TAG, "moveToFirst(): index $idx out of bounds for list of size ${this.size}" )
@@ -92,7 +95,8 @@ fun <T> ArrayList<T>.moveToFirst(idx: Int) {
     add(0, item)
 }
 
-fun <T> ArrayList<T>.moveToLast(idx: Int) {
+fun <T> ArrayList<T>.moveToLast(                                                     idx: Int
+) {
     if (idx !in indices) {
         // region LOG
             eLog(TAG, "moveToLast(): index $idx out of bounds for list of size ${this.size}")
