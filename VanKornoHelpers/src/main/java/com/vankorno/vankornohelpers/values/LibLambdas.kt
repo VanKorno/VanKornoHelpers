@@ -12,6 +12,8 @@ var playSound: (Int)->Unit = { lambdaError("playSound") }
 
 var showKeyboard: ()->Unit = {}
 var hideKeyboard: ()->Unit = {}
+//var reqFocusInput: ()->Unit = {}
+var clearFocus: ()->Unit = { lambdaError("clearFocus") }
 
 
 var getBuffer: ()->String = {
