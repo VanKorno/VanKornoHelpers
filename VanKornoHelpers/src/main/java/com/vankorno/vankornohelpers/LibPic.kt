@@ -12,7 +12,7 @@ private const val TAG = "LibPic"
 
 class LibPic(             private val context: Context,
                           private val nameGen: ()->String = { "pic_${System.currentTimeMillis()}" },
-                    private val picFolderName: String = "user_pics"
+                    private val picFolderName: String = "user_pics",
 ) {
     val imagesDir = File(context.filesDir, picFolderName).apply { mkdirs() }
     
