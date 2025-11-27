@@ -5,7 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 
 
-class LibClipBoard {
+class LibClipboard {
     
     fun getClipboard(                                                               cont: Context
     ): String {
