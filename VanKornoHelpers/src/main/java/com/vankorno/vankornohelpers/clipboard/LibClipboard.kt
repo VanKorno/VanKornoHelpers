@@ -66,6 +66,8 @@ object LibClipboard {
         }
         sysListener = listener
         clipboardManager.addPrimaryClipChangedListener(listener)
+        
+        notifyAll(getClipboard(context))
     }
     
     
