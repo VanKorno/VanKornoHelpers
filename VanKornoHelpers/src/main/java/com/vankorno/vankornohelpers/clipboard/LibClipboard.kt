@@ -14,40 +14,38 @@ object LibClipboard {
     val clipboardFlow: StateFlow<String> get() = _clipboardFlow
     
     
-    fun addListener(l: (String) -> Unit) {
-        listeners += l
-    }
+    fun addListener(l: (String) -> Unit) { listeners += l }
     
-    fun removeListener(l: (String) -> Unit) {
-        listeners -= l
-    }
+    fun removeListener(l: (String) -> Unit) { listeners -= l }
     
-    private fun notifyAll(txt: String) {
+    
+    private fun notifyAll(                                                           txt: String
+    ) {
         _clipboardFlow.value = txt
         listeners.forEach { it(txt) }
     }
     
     
-    fun getClipboard(                                                               cont: Context
+    fun getClipboard(                                                            context: Context
     ): String {
-        val clipboard = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val item = clipboard.primaryClip?.getItemAt(0) ?: return ""
         return item.text.toString()
     }
     
     
-    fun setClipboard(                                                               cont: Context,
+    fun setClipboard(                                                            context: Context,
                                                                                      txt: String,
     ) {
-        val clipboard = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboard.setPrimaryClip(ClipData.newPlainText("simple text", txt))
         notifyAll(txt)
     }
     
     
-    fun clearClipboard(                                                             cont: Context
+    fun clearClipboard(                                                          context: Context
     ) {
-        val clipboardManager = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboardManager.setPrimaryClip(ClipData.newPlainText("", ""))
         notifyAll("")
     }
@@ -57,27 +55,29 @@ object LibClipboard {
     private var sysListener: ClipboardManager.OnPrimaryClipChangedListener? = null
     
     
-    fun attachSystemListener(                                                       cont: Context
+    fun attachSystemListener(                                                    context: Context
     ) {
         if (sysListener != null) return
         
-        val clipboardManager = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         
         val listener = ClipboardManager.OnPrimaryClipChangedListener {
-            val txt = (clipboardManager.primaryClip?.getItemAt(0)?.text?.toString() ?: "").trim()
-            notifyAll(txt)
+            notifyAll(getClipboard(context))
         }
         sysListener = listener
         clipboardManager.addPrimaryClipChangedListener(listener)
     }
     
     
-    fun detachSystemListener(                                                       cont: Context
+    fun detachSystemListener(                                                    context: Context
     ) {
         val listener = sysListener ?: return
-        val clipboardManager = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboardManager.removePrimaryClipChangedListener(listener)
         sysListener = null
     }
+    
+    
+    
     
 }
