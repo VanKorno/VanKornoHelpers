@@ -16,11 +16,11 @@ var hideKeyboard: ()->Unit = {}
 var clearFocus: ()->Unit = { lambdaError("clearFocus") }
 
 
-var getBuffer: ()->String = {
-    lambdaError("getBuffer") 
+var getClipboard: ()->String = {
+    lambdaError("getClipboard") 
     ""
 }
-var setBuffer: (String)->Unit = { lambdaError("setBuffer") }
+var setClipboard: (String)->Unit = { lambdaError("setClipboard") }
 
 
 

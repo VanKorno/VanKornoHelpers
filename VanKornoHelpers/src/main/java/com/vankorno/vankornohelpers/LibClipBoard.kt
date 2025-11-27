@@ -7,7 +7,7 @@ import android.content.Context
 
 class LibClipBoard {
     
-    fun getTxt(                                                                  cont: Context
+    fun getClipboard(                                                               cont: Context
     ): String {
         val clipboard = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val item = clipboard.primaryClip?.getItemAt(0) ?: return ""
@@ -15,15 +15,15 @@ class LibClipBoard {
     }
     
     
-    fun setTxt(                                                                  cont: Context,
-                                                                                  txt: String,
+    fun setClipboard(                                                               cont: Context,
+                                                                                     txt: String,
     ) {
         val clipboard = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboard.setPrimaryClip(ClipData.newPlainText("simple text", txt))
     }
     
     
-    fun clearBuffer(                                                             cont: Context
+    fun clearClipboard(                                                             cont: Context
     ) {
         val clipboardManager = cont.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val emptyClip = ClipData.newPlainText("", "")
