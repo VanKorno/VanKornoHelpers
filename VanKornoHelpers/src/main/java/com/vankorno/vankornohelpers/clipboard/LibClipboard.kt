@@ -1,4 +1,4 @@
-package com.vankorno.vankornohelpers
+package com.vankorno.vankornohelpers.clipboard
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -81,8 +81,3 @@ object LibClipboard {
     }
     
 }
-
-
-
-
-
