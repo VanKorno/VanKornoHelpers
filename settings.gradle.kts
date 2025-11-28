@@ -20,7 +20,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AppForVanKornosHelpers"
+rootProject.name = "VanKornoHelpers"
 include(":app")
 include(":VanKornoHelpers")
  

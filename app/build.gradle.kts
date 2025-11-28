@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.vankorno.appforvankornoshelpers"
+    namespace = "com.vankorno.vkhelperapp"
     compileSdk = 36
     
     defaultConfig {
-        applicationId = "com.vankorno.appforvankornoshelpers"
+        applicationId = "com.vankorno.vkhelperapp"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

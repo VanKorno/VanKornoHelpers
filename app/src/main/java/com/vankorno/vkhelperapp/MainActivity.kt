@@ -1,4 +1,4 @@
-package com.vankorno.appforvankornoshelpers
+package com.vankorno.vkhelperapp
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

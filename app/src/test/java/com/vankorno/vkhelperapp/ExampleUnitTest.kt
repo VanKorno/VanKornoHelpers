@@ -1,4 +1,4 @@
-package com.vankorno.appforvankornoshelpers
+package com.vankorno.vkhelperapp
 
 import org.junit.Test
 
