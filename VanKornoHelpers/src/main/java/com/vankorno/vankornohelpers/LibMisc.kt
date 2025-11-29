@@ -53,6 +53,6 @@ inline fun withUI(                                                              
 }
 
 
-
+internal infix fun String.c(str2: String = "") = this + ", " + str2
 
 
