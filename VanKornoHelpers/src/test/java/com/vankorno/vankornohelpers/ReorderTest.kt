@@ -1,6 +1,6 @@
 package com.vankorno.vankornohelpers
 
-import com.vankorno.BaseUnitTest
+import com.vankorno.vankornohelpers.BaseUnitTest
 import com.vankorno.vankornohelpers.convenience.moveToFirst
 import com.vankorno.vankornohelpers.convenience.moveToLast
 import com.vankorno.vankornohelpers.convenience.swapWithFirst

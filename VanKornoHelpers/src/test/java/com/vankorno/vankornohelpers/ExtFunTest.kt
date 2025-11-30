@@ -1,6 +1,5 @@
 package com.vankorno.vankornohelpers
 
-import com.vankorno.BaseUnitTest
 import com.vankorno.vankornohelpers.convenience.nextOrFirst
 import org.junit.Assert.assertEquals
 import org.junit.Test

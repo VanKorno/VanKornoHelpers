@@ -1,6 +1,6 @@
 package com.vankorno.vankornohelpers.convenience
 
-import com.vankorno.BaseUnitTest
+import com.vankorno.vankornohelpers.BaseUnitTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

@@ -1,6 +1,5 @@
 package com.vankorno.vankornohelpers
 
-import com.vankorno.BaseUnitTest
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
