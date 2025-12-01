@@ -21,6 +21,7 @@ object LibGlobals {
     
     @Volatile var intForAndroidTests = 0
     @Volatile var strForAndroidTests = ""
+    @Volatile var firstAndroidTestDone = false
     
     @Volatile var simulatedTime = 0L
     

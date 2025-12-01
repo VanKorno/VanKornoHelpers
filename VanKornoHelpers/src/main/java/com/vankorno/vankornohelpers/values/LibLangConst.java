@@ -1,5 +1,7 @@
 package com.vankorno.vankornohelpers.values;
 
+/* https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes */
+
 public class LibLangConst {
     public static final String
         LangAuto = "auto",
