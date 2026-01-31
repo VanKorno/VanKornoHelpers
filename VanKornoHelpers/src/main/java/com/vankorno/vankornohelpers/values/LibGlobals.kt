@@ -6,6 +6,7 @@ object LibGlobals {
     @Volatile var appStarted = false
     @Volatile var actPaused = false
     
+    @Volatile var configChangeJustHappened = false
     @Volatile var updatingScreenNow = false
     
     var screenDensity = 0.0f
