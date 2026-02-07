@@ -42,12 +42,15 @@ class LibMisc {
 }
 
 
+fun hasUI() = appStarted && actExists && actRunning
+
+
 /**
  * Run stuff when UI is fully operational, after the start of the app.
  */
 inline fun withUI(                                                                   run: ()->Unit
 ) {
-    if (appStarted && actExists && actRunning) {
+    if (hasUI()) {
         run()
     }
 }
