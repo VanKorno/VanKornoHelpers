@@ -1,5 +1,7 @@
 package com.vankorno.vankornohelpers.values
 
+import com.vankorno.vankornohelpers.LibMisc
+
 object LibGlobals {
     @Volatile var actRunning = false
     @Volatile var actExists = false
@@ -11,12 +13,15 @@ object LibGlobals {
     
     var screenDensity = 0.0f
     
-    @Volatile var androidTestRun = false
     @Volatile var debugBuild = false
     
-    val unitTestRun: Boolean by lazy {
+    val testsRun: Boolean by lazy {
         Thread.currentThread().stackTrace.any { it.className.startsWith("org.junit.") }
     }
+    @Volatile var androidTestsRun: Boolean = LibMisc().isInstrumentedTestRun()
+    
+    val unitTestsRun: Boolean
+        get() = testsRun && !androidTestsRun
     
     @Volatile var eLogInUI = false
     
@@ -42,7 +47,7 @@ object LibGlobals {
     
         screenDensity = 0.0f
         
-        androidTestRun = false
+        androidTestsRun = false
         debugBuild = false
     
         eLogInUI = false

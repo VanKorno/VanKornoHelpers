@@ -6,7 +6,7 @@ import android.os.Looper
 import android.widget.Toast
 import com.vankorno.vankornohelpers.values.LibGlobals.actExists
 import com.vankorno.vankornohelpers.values.LibGlobals.actRunning
-import com.vankorno.vankornohelpers.values.LibGlobals.androidTestRun
+import com.vankorno.vankornohelpers.values.LibGlobals.androidTestsRun
 import com.vankorno.vankornohelpers.values.LibGlobals.appStarted
 
 class LibMisc {
@@ -37,7 +37,7 @@ class LibMisc {
         false
     }
     
-    fun getDbName(fileName: String) = if (androidTestRun)  ":memory:"  else  fileName
+    fun getDbName(fileName: String) = if (androidTestsRun)  ":memory:"  else  fileName
     
 }
 

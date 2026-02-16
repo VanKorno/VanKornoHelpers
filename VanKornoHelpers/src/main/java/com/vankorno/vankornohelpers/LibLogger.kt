@@ -3,7 +3,7 @@ package com.vankorno.vankornohelpers
 import android.util.Log
 import com.vankorno.vankornohelpers.values.LibGlobals.debugBuild
 import com.vankorno.vankornohelpers.values.LibGlobals.eLogInUI
-import com.vankorno.vankornohelpers.values.LibGlobals.unitTestRun
+import com.vankorno.vankornohelpers.values.LibGlobals.unitTestsRun
 import com.vankorno.vankornohelpers.values.longToast
 
 private const val MaxToastLength = 200
@@ -13,7 +13,7 @@ fun dLog(                                                                       
 ) {
     if (!debugBuild)  return  //\/\/\/\/\/\
     
-    if (unitTestRun)
+    if (unitTestsRun)
         println("Dbg ($tag): $msg")
     else
         Log.d(tag, msg)
@@ -24,7 +24,7 @@ fun wLog(                                                                       
 ) {
     if (!debugBuild)  return  //\/\/\/\/\/\
     
-    if (unitTestRun)
+    if (unitTestsRun)
         println("Warning ($tag): $msg")
     else
         Log.w(tag, msg)
@@ -35,7 +35,7 @@ fun eLog(                                                                    tag
                                                                              msg: String,
                                                                        throwable: Throwable? = null,
 ) {
-    if (unitTestRun) {
+    if (unitTestsRun) {
         println("ERROR! ($tag): $msg")
         throwable?.printStackTrace()
     } else {

@@ -1,7 +1,7 @@
 package com.vankorno.vankornohelpers
 
-import com.vankorno.vankornohelpers.values.LibGlobals.androidTestRun
 import com.vankorno.vankornohelpers.values.LibGlobals.simulatedTime
+import com.vankorno.vankornohelpers.values.LibGlobals.testsRun
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -10,7 +10,7 @@ import java.time.ZoneId
 //private const val TAG = "TimeProvider"
 
 
-fun getCurrTime() = if (androidTestRun) {
+fun getCurrTime() = if (testsRun) {
                         checkSetCurr()
                         simulatedTime
                     } else {
