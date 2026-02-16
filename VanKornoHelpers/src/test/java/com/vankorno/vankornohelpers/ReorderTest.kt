@@ -1,6 +1,5 @@
 package com.vankorno.vankornohelpers
 
-import com.vankorno.vankornohelpers.BaseUnitTest
 import com.vankorno.vankornohelpers.convenience.moveToFirst
 import com.vankorno.vankornohelpers.convenience.moveToLast
 import com.vankorno.vankornohelpers.convenience.swapWithFirst
@@ -11,7 +10,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Test
 
-class ReorderTest : BaseUnitTest() {
+class ReorderTest {
     
     @Test
     fun `List swap - valid index swaps correctly`() {

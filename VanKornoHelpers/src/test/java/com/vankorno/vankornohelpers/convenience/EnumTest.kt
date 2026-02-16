@@ -1,6 +1,5 @@
 package com.vankorno.vankornohelpers.convenience
 
-import com.vankorno.vankornohelpers.BaseUnitTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -10,7 +9,7 @@ private enum class TestEnum(override val code: String) : EnumWithCode {
     EeThree("3")
 }
 
-class EnumTest : BaseUnitTest() {
+class EnumTest{
     
     @Test
     fun `enumFromCode returns correct match`() {

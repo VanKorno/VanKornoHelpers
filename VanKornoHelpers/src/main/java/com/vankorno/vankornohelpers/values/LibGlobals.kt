@@ -12,8 +12,11 @@ object LibGlobals {
     var screenDensity = 0.0f
     
     @Volatile var androidTestRun = false
-    @Volatile var unitTestRun = false
     @Volatile var debugBuild = false
+    
+    val unitTestRun: Boolean by lazy {
+        Thread.currentThread().stackTrace.any { it.className.startsWith("org.junit.") }
+    }
     
     @Volatile var eLogInUI = false
     
@@ -40,7 +43,6 @@ object LibGlobals {
         screenDensity = 0.0f
         
         androidTestRun = false
-        unitTestRun = false
         debugBuild = false
     
         eLogInUI = false

@@ -4,7 +4,7 @@ import com.vankorno.vankornohelpers.convenience.nextOrFirst
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class ExtFunTest : BaseUnitTest() {
+class ExtFunTest {
     
     @Test
     fun `Int nextOrFirst within range returns next`() {
