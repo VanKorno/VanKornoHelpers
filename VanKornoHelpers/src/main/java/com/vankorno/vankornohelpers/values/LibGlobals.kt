@@ -15,13 +15,15 @@ object LibGlobals {
     
     @Volatile var debugBuild = false
     
-    val testsRun: Boolean by lazy {
-        Thread.currentThread().stackTrace.any { it.className.startsWith("org.junit.") }
-    }
-    @Volatile var androidTestsRun: Boolean = LibMisc().isInstrumentedTestRun()
+    @Volatile
+    var androidTestsRun: Boolean = LibMisc().isInstrumentedTestRun()
     
+    val testsRun: Boolean by lazy {
+        androidTestsRun || Thread.currentThread().stackTrace.any { it.className.startsWith("org.junit.") }
+    }
     val unitTestsRun: Boolean
         get() = testsRun && !androidTestsRun
+    
     
     @Volatile var eLogInUI = false
     
