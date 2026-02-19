@@ -4,6 +4,9 @@ build/
 
 # IDE
 .idea/
+!.idea/dictionaries/
+!.idea/dictionaries/**
+!.idea\inspectionProfiles\Project_Default.xml
 *.iml
 *.ipr
 *.iws
