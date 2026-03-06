@@ -4,7 +4,7 @@ import android.util.Log
 import com.vankorno.vankornohelpers.values.LibGlobals.debugBuild
 import com.vankorno.vankornohelpers.values.LibGlobals.eLogInUI
 import com.vankorno.vankornohelpers.values.LibGlobals.unitTestsRun
-import com.vankorno.vankornohelpers.values.longToast
+import com.vankorno.vankornohelpers.values.LibLambdas.longToast
 
 private const val MaxToastLength = 200
 
