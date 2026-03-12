@@ -1,13 +1,13 @@
 package com.vankorno.vankornohelpers
 
+import com.vankorno.vankornohelpers.values.LibConstants.MillisInDay
+import com.vankorno.vankornohelpers.values.LibConstants.MillisInHour
 import com.vankorno.vankornohelpers.values.LibGlobals.simulatedTime
 import com.vankorno.vankornohelpers.values.LibGlobals.testsRun
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
-
-//private const val TAG = "TimeProvider"
 
 
 fun getCurrTime() = if (testsRun) {
@@ -38,3 +38,33 @@ fun LocalDateTime.toMillis(                                   zone: ZoneId = Zon
 
 fun Long.toLocalDateTime(                                     zone: ZoneId = ZoneId.systemDefault()
 ): LocalDateTime = Instant.ofEpochMilli(this).atZone(zone).toLocalDateTime()
+
+
+
+
+fun Long.getStartOfSameDay(): Long = this.toLocalDateTime()
+    .toLocalDate()
+    .atStartOfDay()
+    .toMillis()
+
+
+fun getStartOfToday(): Long = getCurrTime().getStartOfSameDay()
+
+
+fun Long.plusDays(days: Long): Long = this + days * MillisInDay
+fun Long.plusHours(hours: Long): Long = this + hours * MillisInHour
+
+
+fun Long.coerceNotFuture(): Long = minOf(this, getCurrTime())
+
+
+fun Long.getMillisTillNow(): Long = getCurrTime() - this
+
+
+
+
+
+
+
+
+
