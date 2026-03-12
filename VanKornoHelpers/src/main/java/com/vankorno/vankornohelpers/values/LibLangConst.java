@@ -40,7 +40,6 @@ public class LibLangConst {
         VIE = "vi",    // Vietnamese
         THA = "th",    // Thai
         FIL = "fil",   // Filipino
-        //HUN = "hu",    // Hungarian
         
         UsLangTag = "en-US",
         UkrLangTag = "uk-UA"
