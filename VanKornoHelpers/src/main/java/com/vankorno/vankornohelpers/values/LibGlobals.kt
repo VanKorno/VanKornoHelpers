@@ -9,7 +9,9 @@ object LibGlobals {
     @Volatile var actPaused = false
     
     @Volatile var configChangeJustHappened = false
-    @Volatile var updatingScreenNow = false
+    @Volatile var updatingScreen = false
+    @Volatile var navigating = false
+    @Volatile var navigatingBack = false
     
     var screenDensity = 0.0f
     
@@ -45,7 +47,9 @@ object LibGlobals {
         actExists = false
         appStarted = false
         actPaused = false
-        updatingScreenNow = false
+        updatingScreen = false
+        navigating = false
+        navigatingBack = false
     
         screenDensity = 0.0f
         
