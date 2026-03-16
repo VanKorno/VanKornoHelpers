@@ -51,8 +51,11 @@ fun Long.getStartOfSameDay(): Long = this.toLocalDateTime()
 fun getStartOfToday(): Long = getCurrTime().getStartOfSameDay()
 
 
-fun Long.plusDays(days: Long): Long = this + days * MillisInDay
-fun Long.plusHours(hours: Long): Long = this + hours * MillisInHour
+fun Long.plusDays(days: Int): Long = this + days * MillisInDay
+fun Long.plusHours(hours: Int): Long = this + hours * MillisInHour
+
+fun Long.minusDays(days: Int): Long = this - days * MillisInDay
+fun Long.minusHours(hours: Int): Long = this - hours * MillisInHour
 
 
 fun Long.coerceNotFuture(): Long = minOf(this, getCurrTime())
