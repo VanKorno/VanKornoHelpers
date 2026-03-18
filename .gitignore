@@ -23,6 +23,7 @@ captures/
 
 # Kotlin compiler
 .kotlinc/
+/.kotlin/sessions/
 
 # AARs / Artifacts (for libraries)
 *.aar
