@@ -4,9 +4,11 @@ build/
 
 # IDE
 .idea/
-!.idea/dictionaries/
-!.idea/dictionaries/**
-!.idea\inspectionProfiles\Project_Default.xml
+!.idea/vcs.xml
+!.idea/inspectionProfiles/
+!.idea/inspectionProfiles/Project_Default.xml
+!.idea/inspectionProfiles/profiles_settings.xml
+!.idea/dictionaries/project.xml
 *.iml
 *.ipr
 *.iws
