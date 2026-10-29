@@ -3,6 +3,13 @@
   <component name="Git.Settings">
     <option name="SHOULD_SHOW_PUSH_DIALOG" value="false" />
   </component>
+
+  <component name="GitSharedSettings">
+    <option name="FORCE_PUSH_PROHIBITED_PATTERNS">
+      <list />
+    </option>
+  </component>
+
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
