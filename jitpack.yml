@@ -1,0 +1,8 @@
+build:
+  image: latest
+
+jdk:
+  - openjdk21
+
+install:
+  - ./gradlew :VanKornoHelpers:publishToMavenLocal
