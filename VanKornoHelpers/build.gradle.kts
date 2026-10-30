@@ -29,7 +29,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
     publishing {
-        singleVariant("release") {}
+        singleVariant("release") {
+            withSourcesJar()
+        }
     }
 }
 
@@ -43,7 +45,10 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
-val versionTag = System.getenv("VERSION") ?: "unspecified"
+val versionTag = providers.environmentVariable("VERSION").orNull
+    ?: providers.gradleProperty("version").orNull.takeIf { it != "unspecified" }
+    ?: project.version.takeIf { it != "unspecified" }?.toString()
+    ?: "unspecified"
 
 afterEvaluate {
     publishing {
