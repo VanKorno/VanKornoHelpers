@@ -38,7 +38,14 @@ object LibGlobals {
     
     @Volatile var simulatedTime = 0L
     
-    
+    const val UserMe = 1
+    const val UserTester = 2
+    const val UserPublic = 3
+    @Volatile var appUser = UserPublic
+        set(value) {
+            field = value
+            eLogInUI = value == UserMe || value == UserTester
+        }
     
     
     
