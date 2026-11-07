@@ -21,7 +21,12 @@ object LibGlobals {
     var androidTestsRun: Boolean = LibMisc().isInstrumentedTestRun()
     
     val testsRun: Boolean by lazy {
-        androidTestsRun || Thread.currentThread().stackTrace.any { it.className.startsWith("org.junit.") }
+        androidTestsRun || try { // Checks if JUnit is present on the runtime classpath, regardless of which thread calls it
+            Class.forName("org.junit.Test")
+            true
+        } catch (_: ClassNotFoundException) {
+            false
+        }
     }
     val unitTestsRun: Boolean
         get() = testsRun && !androidTestsRun
