@@ -1,14 +1,14 @@
 package com.vankorno.vankornohelpers
 
 import android.app.Activity
-import android.graphics.drawable.ColorDrawable
+import androidx.core.graphics.drawable.toDrawable
 
 class LibUI {
     
     fun setWindowBackgroundColor(                                        activity: Activity,
                                                                             color: Int = -0xe4e4e5,
     ) {
-        val myDrawable = ColorDrawable(color)
+        val myDrawable = color.toDrawable()
         activity.window.setBackgroundDrawable(myDrawable)
     }
     
